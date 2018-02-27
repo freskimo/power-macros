@@ -25,9 +25,7 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
     public static BurpExtender getInstance() {
         return INSTANCE;
     }
-
     private static  BurpExtender INSTANCE = null;
-
     private static String EXTENSION_NAME = "EnhancedExtendedMacros";
     private static String EXTENSION_NAME_TAB_NAME = "Enhanced Extended Macro";
     private static String VERSION = "0.0.1";
@@ -38,7 +36,6 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
     public IBurpExtenderCallbacks getCallbacks() {
         return callbacks;
     }
-
     public void setCallbacks(IBurpExtenderCallbacks callbacks) {
         this.callbacks = callbacks;
     }
@@ -47,7 +44,7 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
     public IExtensionHelpers helpers;
     private Set<String> actualCallRepSet; /// what to replace in last call
     public PrintWriter stdout;
-    public PrintWriter stderr;
+    private PrintWriter stderr;
 
     private JPanel panel1;
     private JTabbedPane tabbedPane1;
@@ -55,7 +52,7 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
     private JTable extractTable;
     public static ExtractionModel extractTableModel;
 
-    private JTable replaceTable;
+    public JTable replaceTable;
     public static ReplaceModel replaceTableModel;
 
     private JButton addExtractionButton;
@@ -66,9 +63,7 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
     private JButton editExtractionButton;
 
     private DebugUtilities debugUtilities;
-
     private long lastExtractionTime = 0L;
-
 
     public BurpExtender() {
         if(INSTANCE == null){
@@ -89,8 +84,6 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
 
         }
     }
-
-
 
     @Override
     public void processHttpMessage(int toolFlag, boolean messageIsRequest, IHttpRequestResponse messageInfo) {
@@ -208,7 +201,6 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
         extractTableModel = new ExtractionModel();
         extractTable.setModel(extractTableModel);
 
-
         replaceTable = new JTable();
         replaceTableModel = new ReplaceModel(this);
         replaceTable.setModel(replaceTableModel);
@@ -225,6 +217,7 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
     public ExtractionModel getExtractionModel() {
         return extractTableModel;
     }
+
     public ReplaceModel getReplacementModel() {
         return replaceTableModel;
     }
