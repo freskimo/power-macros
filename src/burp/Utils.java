@@ -7,7 +7,7 @@ public class Utils {
     public static void blinkTab(final ITab iTab){
         JTabbedPane tp = (JTabbedPane) iTab.getUiComponent().getParent();
         int tabidx = getTabIndex(iTab);
-        tp.setBackgroundAt(tabidx, BurpExtender.BURP_ORANGE);
+//        tp.setBackgroundAt(tabidx, BurpExtender.BURP_ORANGE);
 
         // unblink tab in 4 seconds
         Thread t1 = new Thread(new Runnable() {

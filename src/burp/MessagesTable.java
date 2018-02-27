@@ -9,8 +9,8 @@ import javax.swing.event.TableModelEvent;
 public class MessagesTable extends JTable {
     private BurpExtender extender;
     private boolean isLogger;
-    private ConfigChangedListener textExtChangedListener;
-    private ConfigChangedListener textRepChangedListener;
+//    private ConfigChangedListener textExtChangedListener;
+//    private ConfigChangedListener textRepChangedListener;
     private IMessageEditor req;
     private IMessageEditor res;
     private MessagesController ctrl;
@@ -19,8 +19,8 @@ public class MessagesTable extends JTable {
         this.extender = extender;
         this.isLogger = isLogger;
         if (!isLogger) {
-            textExtChangedListener = new ConfigChangedListener(extender, ConfigActions.A_EXT_CONFIG_CHANGED);
-            textRepChangedListener = new ConfigChangedListener(extender, ConfigActions.A_REP_CONFIG_CHANGED);
+//            textExtChangedListener = new ConfigChangedListener(extender, ConfigActions.A_EXT_CONFIG_CHANGED);
+//            textRepChangedListener = new ConfigChangedListener(extender, ConfigActions.A_REP_CONFIG_CHANGED);
         }
     }
 
@@ -50,8 +50,8 @@ public class MessagesTable extends JTable {
             res.setMessage(ctrl.getResponse() == null ? new byte[0] : ctrl.getResponse(), false);
         }
         if (!isLogger) {
-            textExtChangedListener.textChanged();
-            textRepChangedListener.textChanged();
+//            textExtChangedListener.textChanged();
+//            textRepChangedListener.textChanged();
         }
     }
 

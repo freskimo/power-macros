@@ -1,5 +1,5 @@
-# ExtendedMacro
-ExtendedMacro is plug-in for BurpSuite proxy. It provides similar but extended functionality of BurpSuite Macro feature. The main functionality is, that you are able to trigger one or more request before every request triggered from Intruder, Repeater, Scanner, Sequencer or Spider (except tools Proxy and Extender). You can extract data from arbitrary response of the request and replace or add data to the following request (replace CSRF token, session, add new header ...).
+# PowerMacros
+PowerMacros is plug-in for BurpSuite proxy. It provides similar but extended functionality of BurpSuite Macro feature. The main functionality is, that you are able to trigger one or more request before every request triggered from Intruder, Repeater, Scanner, Sequencer or Spider (except tools Proxy and Extender). You can extract data from arbitrary response of the request and replace or add data to the following request (replace CSRF token, session, add new header ...).
 
 It is still in development, so please don't be angry if something getting wrong, rather let me know to fix it ;).
 
@@ -23,7 +23,7 @@ It is still in development, so please don't be angry if something getting wrong,
 - extracted data caching
 
 ## About the UI
-The plug-in adds new tab into the BurpSuite named "ExtendedMacro". It contains several tabs: "Main", "Logger" and "Settings".
+The plug-in adds new tab into the BurpSuite named "PowerMacros". It contains several tabs: "Main", "Logger" and "Settings".
 
 ### Main
 In the main window you are able to configure all the magic. The left part of the view is the "Extraction message list" and the right part is the "Replace message list".
@@ -35,14 +35,14 @@ Here you can set up what requests will be triggered and what data will be extrac
 Here you can set up what data from extraction will be added/replaced in the following requests. The replace string can be set by the selection of the request.
 
 ### Logger
-Logs all messaged what were modified or triggered by ExtendedMacro.
+Logs all messaged what were modified or triggered by PowerMacros.
 
 ### Settings
-He you can specifies what tool will use the ExtendedMacro plug-in.
+He you can specifies what tool will use the PowerMacros plug-in.
 
 ## How to
-1. Select messages e,g, in the Proxy tab, do right mouse click and select "Send to ExtendedMacro"
-2. go to ExtendedMacro and click on the message in the "Extraction message list"
+1. Select messages e,g, in the Proxy tab, do right mouse click and select "Send to PowerMacros"
+2. go to PowerMacros and click on the message in the "Extraction message list"
 3. select data from the response editor
 4. click "From selection" button
 5. set extraction name and click "Add" button
@@ -69,7 +69,7 @@ Settings
 
 Video https://www.youtube.com/watch?v=IwKa0F7MmTM
 
-[![ExtendedMacro usage](http://img.youtube.com/vi/IwKa0F7MmTM/0.jpg)](https://www.youtube.com/watch?v=IwKa0F7MmTM)
+[![PowerMacros usage](http://img.youtube.com/vi/IwKa0F7MmTM/0.jpg)](https://www.youtube.com/watch?v=IwKa0F7MmTM)
 
 # Contribution
 Feel free to create pull request or issues.
@@ -79,4 +79,4 @@ Thank you very much and enjoy :).
 
 | PayPal | Bitcoin |
 | ------ | ------- |
-| [![](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=P6JB98K7TNJNG&lc=SK&item_number=ExtendedMacro&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted) |  <center> ![19YoCcuruuovPFxDVfVWLVSBqhdPeUHtb5](/images/donation-bitcoin.png)<br />19YoCcuruuovPFxDVfVWLVSBqhdPeUHtb5</center> |
+| [![](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=P6JB98K7TNJNG&lc=SK&item_number=PowerMacros&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted) |  <center> ![19YoCcuruuovPFxDVfVWLVSBqhdPeUHtb5](/images/donation-bitcoin.png)<br />19YoCcuruuovPFxDVfVWLVSBqhdPeUHtb5</center> |

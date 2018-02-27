@@ -14,7 +14,7 @@ public class MessagesModel extends AbstractTableModel {
     private Map<String, Message> messagesMap;
     private IExtensionHelpers helpers;
     private ExtractionTable extractionTable;
-    private ReplaceTable replaceTable;
+//    private ReplaceTable replaceTable;
     private MessagesTable extMsgTable;
     private MessagesTable repMsgTable;
     private String[] cols = {"MsgID", "Host", "Method", "URL"};
@@ -24,20 +24,14 @@ public class MessagesModel extends AbstractTableModel {
         messages = new LinkedList<>();
         messagesMap = new HashMap<>();
         this.extractionTable = null;
-        this.replaceTable = null;
+//        this.replaceTable = null;
         this.extMsgTable = null;
         this.repMsgTable = null;
     }
 
-    public MessagesModel(IExtensionHelpers helpers, ExtractionTable extractionTable, ReplaceTable replaceTable,
+    public MessagesModel(IExtensionHelpers helpers, ExtractionTable extractionTable,
                          MessagesTable extMsgTable, MessagesTable repMsgTable) {
-        this.helpers = helpers;
-        messages = new LinkedList<>();
-        messagesMap = new HashMap<>();
-        this.extractionTable = extractionTable;
-        this.replaceTable = replaceTable;
-        this.extMsgTable = extMsgTable;
-        this.repMsgTable = repMsgTable;
+
     }
 
     @Override
@@ -127,11 +121,11 @@ public class MessagesModel extends AbstractTableModel {
                 ((ExtractionModel) (extractionTable.getModel())).remove(e);
             }
         }
-        if (replaceTable != null) {
-            for (String r : m.getRepRefSet()) {
-                ((ReplaceModel) (replaceTable.getModel())).remove(r);
-            }
-        }
+//        if (replaceTable != null) {
+//            for (String r : m.getRepRefSet()) {
+//                ((ReplaceModel) (replaceTable.getModel())).remove(r);
+//            }
+//        }
         messagesMap.remove(m.getId());
         messages.remove(row);
 
@@ -140,16 +134,16 @@ public class MessagesModel extends AbstractTableModel {
 
 
     public void removeAll() {
-        messagesMap.clear();
-        messages.clear();
-
-        if (extractionTable != null) {
-            ((ExtractionModel) (extractionTable.getModel())).removeAll();
-        }
-        if (extractionTable != null) {
-            ((ReplaceModel) (replaceTable.getModel())).removeAll();
-        }
-        fireTableDataChanged();
+//        messagesMap.clear();
+//        messages.clear();
+//
+//        if (extractionTable != null) {
+//            ((ExtractionModel) (extractionTable.getModel())).removeAll();
+//        }
+//        if (extractionTable != null) {
+//            ((ReplaceModel) (replaceTable.getModel())).removeAll();
+//        }
+//        fireTableDataChanged();
     }
 
     public void addMessage(IHttpRequestResponse msgInfo, String id) {
@@ -210,8 +204,8 @@ public class MessagesModel extends AbstractTableModel {
         this.extractionTable = extractionTable;
     }
 
-    public void setReplaceTable(ReplaceTable replaceTable) {
-        this.replaceTable = replaceTable;
+    public void setReplaceTable() {
+//        this.replaceTable = replaceTable;
     }
 
     public void setExtMsgTable(MessagesTable extMsgTable) {

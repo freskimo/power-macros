@@ -30,51 +30,51 @@ public class MenuListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        switch (action) {
-            case A_SEND_TO_EM:
-                for (IHttpRequestResponse msgInfo: messages) {
-                    // copy and add message to table model
-                    IHttpRequestResponse persistedMsg = extender.getCallbacks().saveBuffersToTempFiles(msgInfo);
-                    model.addMessage(persistedMsg, extender.getNextMsgId());
-                }
-
-                Utils.blinkTab(extender);
-
-                break;
-
-            case A_REMOVE_MSG:
-                if (table.getSelectedRow() >= 0) {
-                    model.removeRow(table.getSelectedRow());
-                }
-                break;
-
-            case A_REMOVE_ALL:
-                model.removeAll();
-                break;
-
-            case A_MOVE_UP_EXT:
-                if (extender.canBeMoved(action)) {
-                    model.moveUp(table.getSelectedRow(), true);
-                }
-                break;
-
-            case A_MOVE_DOWN_EXT:
-                if (extender.canBeMoved(action)) {
-                    model.moveDown(table.getSelectedRow(), true);
-                }
-                break;
-
-            case A_MOVE_UP_REP:
-                if (extender.canBeMoved(action)) {
-                    model.moveUp(table.getSelectedRow(), false);
-                }
-                break;
-
-            case A_MOVE_DOWN_REP:
-                if (extender.canBeMoved(action)) {
-                    model.moveDown(table.getSelectedRow(), false);
-                }
-                break;
-        }
+//        switch (action) {
+//            case A_SEND_TO_EM:
+//                for (IHttpRequestResponse msgInfo: messages) {
+//                    // copy and add message to table model
+//                    IHttpRequestResponse persistedMsg = extender.getCallbacks().saveBuffersToTempFiles(msgInfo);
+//                    model.addMessage(persistedMsg, extender.getNextMsgId());
+//                }
+//
+//                Utils.blinkTab(extender);
+//
+//                break;
+//
+//            case A_REMOVE_MSG:
+//                if (table.getSelectedRow() >= 0) {
+//                    model.removeRow(table.getSelectedRow());
+//                }
+//                break;
+//
+//            case A_REMOVE_ALL:
+//                model.removeAll();
+//                break;
+//
+//            case A_MOVE_UP_EXT:
+//                if (extender.canBeMoved(action)) {
+//                    model.moveUp(table.getSelectedRow(), true);
+//                }
+//                break;
+//
+//            case A_MOVE_DOWN_EXT:
+//                if (extender.canBeMoved(action)) {
+//                    model.moveDown(table.getSelectedRow(), true);
+//                }
+//                break;
+//
+//            case A_MOVE_UP_REP:
+//                if (extender.canBeMoved(action)) {
+//                    model.moveUp(table.getSelectedRow(), false);
+//                }
+//                break;
+//
+//            case A_MOVE_DOWN_REP:
+//                if (extender.canBeMoved(action)) {
+//                    model.moveDown(table.getSelectedRow(), false);
+//                }
+//                break;
+//        }
     }
 }
