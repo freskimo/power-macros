@@ -16,6 +16,12 @@ public class AddReplacement extends JDialog {
     private JFormattedTextField fTxtRegex;
     private JTextField txtPath;
     private JButton button1;
+    private JTable table1;
+    private JButton addButton;
+    private JButton editButton;
+    private JButton removeButton;
+    private JButton upButton;
+    private JButton downButton;
 
     private BurpExtender extender;
 

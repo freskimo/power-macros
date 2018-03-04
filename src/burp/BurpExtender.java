@@ -106,7 +106,7 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
         AddReplacement addReplacementForm = new AddReplacement(this);
         addReplacementForm.setTitle("Add replacement...");
         //https://stackoverflow.com/questions/12988896/jframe-fixed-width
-        addReplacementForm.setSize(new Dimension (294, 252));
+        addReplacementForm.setSize(new Dimension (294, 454));
         addReplacementForm.setResizable(false);
         addReplacementForm.setVisible(true);
     }
