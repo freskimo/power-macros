@@ -83,6 +83,30 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
 
 
         }
+        editReplacementButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AddReplacement addExtractForm = new AddReplacement();
+
+                addExtractForm.setTitle("Edit replacement...");
+                //https://stackoverflow.com/questions/12988896/jframe-fixed-width
+                addExtractForm.setSize(new Dimension (400, 210));
+                addExtractForm.setResizable(false);
+                addExtractForm.setVisible(true);
+            }
+        });
+        editExtractionButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AddExtraction addExtractForm = new AddExtraction();
+
+                addExtractForm.setTitle("Edit extraction...");
+                //https://stackoverflow.com/questions/12988896/jframe-fixed-width
+                addExtractForm.setSize(new Dimension (400, 210));
+                addExtractForm.setResizable(false);
+                addExtractForm.setVisible(true);
+            }
+        });
     }
 
     @Override
@@ -103,7 +127,7 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
 //        }
     }
     private void onAddReplacement(){
-        AddReplacement addReplacementForm = new AddReplacement(this);
+        AddReplacement addReplacementForm = new AddReplacement();
         addReplacementForm.setTitle("Add replacement...");
         //https://stackoverflow.com/questions/12988896/jframe-fixed-width
         addReplacementForm.setSize(new Dimension (294, 454));
@@ -111,7 +135,7 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
         addReplacementForm.setVisible(true);
     }
     private void onAddExtraction(){
-            AddExtraction addExtractForm = new AddExtraction(this);
+            AddExtraction addExtractForm = new AddExtraction();
 
             addExtractForm.setTitle("Add extraction...");
             //https://stackoverflow.com/questions/12988896/jframe-fixed-width

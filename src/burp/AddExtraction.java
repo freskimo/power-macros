@@ -11,11 +11,21 @@ public class AddExtraction extends JDialog {
     private JComboBox cboType;
     private JTextField txtPath;
     private JFormattedTextField fTxtRegex;
+    private JLabel lblRegex;
+    private JLabel lblPath;
+    private JButton btnPath;
 
     private BurpExtender extender;
 
-    public AddExtraction(BurpExtender extender) {
-        this.extender = extender;
+    public AddExtraction() {
+        this.extender = BurpExtender.getInstance();
+
+
+        lblPath.setVisible(false);
+        lblRegex.setVisible(false);
+        btnPath.setVisible(false);
+        txtPath.setVisible(false);
+        fTxtRegex.setVisible(false);
 
         addReplaceTypesToCombo();
 
@@ -49,9 +59,34 @@ public class AddExtraction extends JDialog {
                 onCancel();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        cboType.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+//                if(cboType.getSelectedItem().toString());
+                if (cboType.getSelectedItem().toString().equals(TransformTypes.REGEX.text())){
+                    lblPath.setVisible(false);
+                    txtPath.setVisible(false);
+                    btnPath.setVisible(false);
+                    lblRegex.setVisible(true);
+                    fTxtRegex.setVisible(true);
+                }else if (  cboType.getSelectedItem().toString()
+                                .equals(TransformTypes.JAVASCRIPT.text())
+                            ||
+                            cboType.getSelectedItem().toString()
+                                .equals(TransformTypes.PYTHON.text())){
+
+                    lblPath.setVisible(true);
+                    txtPath.setVisible(true);
+                    btnPath.setVisible(true);
+                    lblRegex.setVisible(false);
+                    fTxtRegex.setVisible(false);
+                }
+            }
+        });
     }
 
     private void addReplaceTypesToCombo(){
+        cboType.addItem(" ...");
         for (TransformTypes type:  TransformTypes.values()) {
             cboType.addItem(type.text());
         }
@@ -74,5 +109,9 @@ public class AddExtraction extends JDialog {
 //        dialog.pack();
 //        dialog.setVisible(true);
 //        System.exit(0);
+    }
+
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
     }
 }

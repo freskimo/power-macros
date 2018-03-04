@@ -1,6 +1,7 @@
 package burp;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 import java.util.Map;
 
@@ -13,9 +14,6 @@ public class AddReplacement extends JDialog {
 
     private JTextField txtName;
     private JComboBox cboType;
-    private JFormattedTextField fTxtRegex;
-    private JTextField txtPath;
-    private JButton button1;
     private JTable table1;
     private JButton addButton;
     private JButton editButton;
@@ -25,11 +23,12 @@ public class AddReplacement extends JDialog {
 
     private BurpExtender extender;
 
-    public AddReplacement(BurpExtender extender) {
-        this.extender = extender;
+    public AddReplacement() {
+        this.extender = BurpExtender.getInstance();
+
 
         addExtractionsToCombo();
-        addReplacementTypesToCombo();
+
 
         setContentPane(contentPane);
         setModal(true);
@@ -61,17 +60,39 @@ public class AddReplacement extends JDialog {
                 onCancel();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        addButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AddReplacementSetup addExtractForm = new AddReplacementSetup();
+
+                addExtractForm.setTitle("Setup new replacement");
+                //https://stackoverflow.com/questions/12988896/jframe-fixed-width
+                addExtractForm.setSize(new Dimension(400, 210));
+                addExtractForm.setResizable(false);
+                addExtractForm.setVisible(true);
+            }
+        });
+        editButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AddReplacementSetup addExtractForm = new AddReplacementSetup();
+
+                addExtractForm.setTitle("Edit existing replacement");
+                //https://stackoverflow.com/questions/12988896/jframe-fixed-width
+                addExtractForm.setSize(new Dimension(400, 210));
+                addExtractForm.setResizable(false);
+                addExtractForm.setVisible(true);
+            }
+        });
     }
     private void addExtractionsToCombo(){
-        Map<String, Extraction> extModelMap = extender.getExtractionModel().getExtModelMap();
-        for (Map.Entry<String, Extraction> entry:  extModelMap.entrySet()) {
-            cboLinkExtract.addItem(entry.getKey());
-        }
 
-    }
-    private void addReplacementTypesToCombo(){
-        for (TransformTypes type:  TransformTypes.values()) {
-            cboType.addItem(type.text());
+        Map<String, Extraction> extModelMap = BurpExtender.extractTableModel.getExtModelMap();
+//        BurpExtender.getInstance().stdout.println("Total extractions: " + extModelMap.size());
+
+        for (Map.Entry<String, Extraction> entry:  extModelMap.entrySet()) {
+
+            cboLinkExtract.addItem(entry.getKey());
         }
     }
 
