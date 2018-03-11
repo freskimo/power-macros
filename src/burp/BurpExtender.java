@@ -1,25 +1,12 @@
 package burp;
 
-import com.sun.jmx.snmp.InetAddressAcl;
-
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.URL;
-import java.security.GeneralSecurityException;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.List;
 
 public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuFactory, ITab, ISessionHandlingAction  {
     //TODO: Feature idea: Cascading extraction replacements like CSS (sequential replacements in order). Ability to set order
@@ -52,10 +39,10 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
     private JTabbedPane tabbedPane1;
 
     private JTable extractTable;
-    public static ExtractionModel extractTableModel;
+    public static GlobalExtractionModel extractTableModel;
 
     public JTable replaceTable;
-    public static ReplaceModel replaceTableModel;
+    public static GlobalReplaceModel replaceTableModel;
 
     private JButton addExtractionButton;
     private JButton removeReplacementButton;
@@ -84,8 +71,8 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
             });
             INSTANCE = this;
 
-            extractTableModel = new ExtractionModel();
-            replaceTableModel = new ReplaceModel();
+            extractTableModel = new GlobalExtractionModel();
+            replaceTableModel = new GlobalReplaceModel();
 
             extractTable.setModel(extractTableModel);
             replaceTable.setModel(replaceTableModel);
@@ -93,19 +80,17 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
         editReplacementButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-//                int[] i = replaceTable.getSelectedRows();
-//                BurpExtender.println(Integer.toString(i.length));
-                BurpExtender.println(Integer.toString(replaceTable.getSelectedRow()));
+                Replace replaceEdit = replaceTableModel.getReplace(replaceTable.getSelectedRow());
 
-
+                BurpExtender.getInstance().stdout.println
+                        (replaceEdit.getId() + ": " + replaceEdit.getLinkedExtracts().getRowCount());
                 AddReplacement addExtractForm = new AddReplacement
                         (replaceTableModel.getReplace(replaceTable.getSelectedRow()));
-//
                 addExtractForm.setTitle("Edit replacement...");
-//                //https://stackoverflow.com/questions/12988896/jframe-fixed-width
                 addExtractForm.setSize(new Dimension (400, 454));
                 addExtractForm.setResizable(false);
                 addExtractForm.setVisible(true);
+                replaceEdit.addLinkedExtraction(GlobalExtractionModel._getExtraction(3));
             }
         });
         editExtractionButton.addActionListener(new ActionListener() {
@@ -273,11 +258,11 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
 
     }
 
-    public ExtractionModel getExtractionModel() {
+    public GlobalExtractionModel getExtractionModel() {
         return extractTableModel;
     }
 
-    public ReplaceModel getReplacementModel() {
+    public GlobalReplaceModel getReplacementModel() {
         return replaceTableModel;
     }
 

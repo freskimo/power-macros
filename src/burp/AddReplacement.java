@@ -25,39 +25,42 @@ public class AddReplacement extends JDialog {
     private JLabel lblRegex;
     private JLabel lblPath;
 
-    private LinkedExtractionModel extractionModel;
+    private LocalExtractionModel extractionModel;
 
-    private Replace replaceToEdit;
+    private Replace oldReplaceToEdit;
+    private Replace newReplaceToEdit;
+
     public AddReplacement(Replace replaceToEdit){
         this();
-        this.replaceToEdit = replaceToEdit;
+        this.oldReplaceToEdit = replaceToEdit;
+        this.newReplaceToEdit = oldReplaceToEdit;
 
-        this.extractionModel = new LinkedExtractionModel(replaceToEdit);
+        this.extractionModel = new LocalExtractionModel(replaceToEdit);
         this.extractTable.setModel(this.extractionModel);
         this.setupEditFields();
         BurpExtender.println("test");
     }
-
     public void setupEditFields(){
-        txtName.setText(replaceToEdit.getId());
-        TransformTypes replaceType = replaceToEdit.getType();
+        txtName.setText(oldReplaceToEdit.getId());
+        TransformTypes replaceType = oldReplaceToEdit.getType();
         cboType.setSelectedItem(replaceType.text());
 
         if(replaceType.equals(TransformTypes.REGEX)){
             fTxtRegex.setVisible(true);
-            fTxtRegex.setText(replaceToEdit.getExtractReplaceMethod().getExtractionArgument());
+            fTxtRegex.setText(oldReplaceToEdit.getExtractReplaceMethod().getExtractionArgument());
         }else if(replaceType.equals(TransformTypes.PYTHON) ||
-                 replaceType.equals(TransformTypes.JAVASCRIPT)){
+                replaceType.equals(TransformTypes.JAVASCRIPT)){
             txtPath.setVisible(true);
-            txtPath.setText(replaceToEdit.getExtractReplaceMethod().getExtractionArgument());
+            txtPath.setText(oldReplaceToEdit.getExtractReplaceMethod().getExtractionArgument());
         }
 
     }
 
     public AddReplacement() {
 
-        this.extractionModel = new LinkedExtractionModel();
+        this.extractionModel = new LocalExtractionModel();
         this.extractTable.setModel(extractionModel);
+        this.oldReplaceToEdit = new Replace();
 
         lblPath.setVisible(false);
         lblRegex.setVisible(false);
@@ -75,6 +78,7 @@ public class AddReplacement extends JDialog {
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onOK();
+                dispose();
             }
         });
         buttonCancel.addActionListener(new ActionListener() {
@@ -101,19 +105,14 @@ public class AddReplacement extends JDialog {
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AddReplacementSetup addExtractForm = new AddReplacementSetup();
+                onAdd();
 
-                addExtractForm.setTitle("Setup new replacement");
-                //https://stackoverflow.com/questions/12988896/jframe-fixed-width
-                addExtractForm.setSize(new Dimension(400, 210));
-                addExtractForm.setResizable(false);
-                addExtractForm.setVisible(true);
             }
         });
         editButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AddReplacementSetup addExtractForm = new AddReplacementSetup();
+                AddReplacementSetup addExtractForm = new AddReplacementSetup(oldReplaceToEdit);
 
                 addExtractForm.setTitle("Edit existing replacement");
                 //https://stackoverflow.com/questions/12988896/jframe-fixed-width
@@ -146,31 +145,33 @@ public class AddReplacement extends JDialog {
             }
         });
     }
+    private void onAdd(){
+        AddReplacementSetup addExtractForm = new AddReplacementSetup(oldReplaceToEdit);
+
+        addExtractForm.setTitle("Setup new replacement");
+        //https://stackoverflow.com/questions/12988896/jframe-fixed-width
+        BurpExtender.getInstance().stdout.println("Linked extracts before: " + oldReplaceToEdit.getLinkedExtracts().getRowCount());
+        this.oldReplaceToEdit = addExtractForm.showDialog();
+
+        BurpExtender.getInstance().stdout.println("Linked extracts after: " + oldReplaceToEdit.getLinkedExtracts().getRowCount());
+        this.extractionModel = new LocalExtractionModel(oldReplaceToEdit);
+        this.extractTable.setModel(this.extractionModel);
+    }
     private void addReplacementTypesToCombo(){
         for (TransformTypes type:  TransformTypes.values()) {
             cboType.addItem(type.text());
         }
     }
     private void onOK() {
-        String typeArgs[] = {"R"};
 
-        Extraction linkedExtraction =  BurpExtender.getInstance().getExtractionModel().getExtractionById(cboLinkExtract.getSelectedItem().toString());
-
-        Replace newReplacement = new Replace(txtName.getText(), cboType.getSelectedItem().toString(), typeArgs, new Extraction[]{linkedExtraction}); //TODO: LINK to extraction here!!
-        BurpExtender.getInstance().getReplacementModel().addReplace(newReplacement);
+//        GlobalReplaceModel._updateReplace(oldReplaceToEdit);
         dispose();
     }
 
     private void onCancel() {
-        // add your code here if necessary
         dispose();
     }
 
     public static void main(String[] args) {
-//        AddReplacement dialog = new AddReplacement();
-//        dialog.setTitle("Add replacement...");
-//        dialog.pack();
-//        dialog.setVisible(true);
-//        System.exit(0);
     }
 }

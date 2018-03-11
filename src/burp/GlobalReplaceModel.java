@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * Created by fruh on 9/8/16.
  */
-public class ReplaceModel extends AbstractTableModel {
+public class GlobalReplaceModel extends AbstractTableModel {
     private static List<Replace> replacesLast  = new LinkedList<>();
     private static List<Replace> replaces = new LinkedList<>();
     private static Map<String, Replace> repModelMap = new HashMap<>();
@@ -25,6 +25,16 @@ public class ReplaceModel extends AbstractTableModel {
             BurpExtender.getInstance().callbacks.registerSessionHandlingAction(burpAction);
         }
     }
+
+    public static void _updateReplace(Replace r){
+        BurpExtender.getInstance().stdout.println("UPDATING GLOBAL REPLACE");
+        repModelMap.put(r.getId(), r);
+
+        replaces.clear();
+        replaces.addAll(repModelMap.values());
+
+    }
+
     @Override
     public int getRowCount() {
         return replaces.size();
@@ -73,10 +83,10 @@ public class ReplaceModel extends AbstractTableModel {
 
         switch (col) {
             case 0:
-                if(getReplace(row).getExtractionModel().getRowCount() > 1){
+                if(getReplace(row).getGlobalExtractions().getRowCount() > 1){
                     ret = "[Multiple]";
                 }else{
-                    ret = getReplace(row).getExtractionModel().getExtraction(0).getId();
+                    ret = getReplace(row).getGlobalExtractions().getExtraction(0).getId();
                 }
                 break;
 
@@ -85,10 +95,10 @@ public class ReplaceModel extends AbstractTableModel {
                 break;
 
             case 2:
-                if(getReplace(row).getExtractionModel().getRowCount() > 1){
+                if(getReplace(row).getGlobalExtractions().getRowCount() > 1){
                     ret = "[Multiple]";
                 }else{
-                    ret = getReplace(row).getExtractionModel().getExtraction(0).getTypeString();
+                    ret = getReplace(row).getGlobalExtractions().getExtraction(0).getTypeString();
                 }
                 break;
 

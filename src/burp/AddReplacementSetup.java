@@ -1,6 +1,7 @@
 package burp;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 import java.util.Map;
 
@@ -10,8 +11,21 @@ public class AddReplacementSetup extends JDialog {
     private JButton buttonCancel;
     private JComboBox cboType;
     private JComboBox cboLinkExtract;
+    private Replace replaceToEdit;
 
-    public AddReplacementSetup() {
+    //https://stackoverflow.com/questions/4089311/how-can-i-return-a-value-from-a-jdialog-box-to-the-parent-jframe
+
+    public Replace showDialog(){
+        setSize(new Dimension(400, 210));
+        setResizable(false);
+        setVisible(true);
+        BurpExtender.getInstance().stdout.println("returning...");
+        return replaceToEdit;
+    }
+
+    public AddReplacementSetup(Replace replaceToEdit) {
+        this.replaceToEdit = replaceToEdit;
+
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
@@ -52,8 +66,12 @@ public class AddReplacementSetup extends JDialog {
     }
 
 
+
     private void onOK() {
         // add your code here
+        replaceToEdit.addLinkedExtraction(GlobalExtractionModel._getExtraction(cboLinkExtract.getSelectedIndex()));
+        BurpExtender.getInstance().stdout.println("in OK. Adding: " + GlobalExtractionModel._getExtraction(cboLinkExtract.getSelectedIndex()).getId());
+        setVisible(false);
         dispose();
     }
 
@@ -62,11 +80,12 @@ public class AddReplacementSetup extends JDialog {
         dispose();
     }
 
+
     public static void main(String[] args) {
-        AddReplacementSetup dialog = new AddReplacementSetup();
-        dialog.pack();
-        dialog.setVisible(true);
-        System.exit(0);
+//        AddReplacementSetup dialog = new AddReplacementSetup(replaceToEdit);
+//        dialog.pack();
+//        dialog.setVisible(true);
+//        System.exit(0);
     }
 
     private void createUIComponents() {

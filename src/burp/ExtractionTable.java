@@ -19,7 +19,7 @@ public class ExtractionTable extends JTable {
 //        super.changeSelection(i, i1, b, b1);
 //
 //        if (i >= 0) {
-//            Extraction ext = ((ExtractionModel) getModel()).getExtraction(i);
+//            Extraction ext = ((GlobalExtractionModel) getModel()).getExtraction(i);
 //
 //            extender.getExtMessagesTable().setSelectionById(ext.getMsgId());
 //            extender.getExtractionNameStringField().setText(ext.getId());
@@ -30,7 +30,7 @@ public class ExtractionTable extends JTable {
     }
 
     public void setSelectionById(String id) {
-//        ExtractionModel model = (ExtractionModel) getModel();
+//        GlobalExtractionModel model = (GlobalExtractionModel) getModel();
 //
 //        changeSelection(model.getRowById(id), 0, false, false);
     }

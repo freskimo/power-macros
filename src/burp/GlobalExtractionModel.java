@@ -9,23 +9,26 @@ import java.util.Map;
 /**
  * Created by fruh on 9/8/16.
  */
-public class ExtractionModel extends AbstractTableModel {
+public class GlobalExtractionModel extends AbstractTableModel {
 
     private static List<Extraction> extractions = new LinkedList<>();
     private static Map<String, Extraction> mapAllExtracts = new HashMap<>();
 
+
     private String[] cols = {"Name", "Type"};
     private Replace linkedReplacement;
 
-    public ExtractionModel() {
+
+
+    public GlobalExtractionModel() {
 
     }
-    public ExtractionModel(Replace linkedReplacement) {
+    public GlobalExtractionModel(Replace linkedReplacement) {
         this();
         this.linkedReplacement = linkedReplacement;
     }
 
-    public ExtractionModel(Replace linkedReplacement, Extraction extList[]) {
+    public GlobalExtractionModel(Replace linkedReplacement, Extraction extList[]) {
        this(linkedReplacement);
        this.addExtractions(extList);
     }
@@ -46,6 +49,17 @@ public class ExtractionModel extends AbstractTableModel {
     public String getColumnName(int index) {
         if (index < cols.length) {
             return cols[index];
+        }
+        return null;
+    }
+
+    public static void _updateExtraction(Extraction e){
+
+    }
+
+    public static Extraction _getExtraction(int i) {
+        if (i >= 0 && i < extractions.size()) {
+            return extractions.get(i);
         }
         return null;
     }
@@ -136,22 +150,23 @@ public class ExtractionModel extends AbstractTableModel {
     }
 
 
-    public String replaceExtractions(String request, IExtensionHelpers helpers) {
-        for (Extraction extraction: this.extractions) {
-//            BurpExtender.getInstance().stdout.println("\nExtraction type: " + extraction.getTypeString());
+//    public String replaceExtractions(String request, IExtensionHelpers helpers) {
+//        for (Extraction extraction: this.extractions) {
+////            BurpExtender.getInstance().stdout.println("\nExtraction type: " + extraction.getTypeString());
+//
+////            if (extraction.getTypeString().equals(TransformTypes.REGEX.text())) {
+////                BurpExtender.getInstance().stdout.println("Extraction string: " + extraction.getReplacedExtraction(request));
+////                BurpExtender.getInstance().stdout.println("Replacement string: " + this.linkedReplacement.getExtractReplaceMethod().getReplacedExtraction(request));
+////                BurpExtender.getInstance().stdout.println("-------------------------------\n");
+//                request = request.replace(extraction.getExtractionString(request),
+//                        this.linkedReplacement.getExtractReplaceMethod().getReplacedExtraction(request));
+//
+////            }
+//        }
+//
+//        return request;
+//    }
 
-//            if (extraction.getTypeString().equals(TransformTypes.REGEX.text())) {
-//                BurpExtender.getInstance().stdout.println("Extraction string: " + extraction.getReplacedExtraction(request));
-//                BurpExtender.getInstance().stdout.println("Replacement string: " + this.linkedReplacement.getExtractReplaceMethod().getReplacedExtraction(request));
-//                BurpExtender.getInstance().stdout.println("-------------------------------\n");
-                request = request.replace(extraction.getExtractionString(request),
-                        this.linkedReplacement.getExtractReplaceMethod().getReplacedExtraction(request));
-
-//            }
-        }
-
-        return request;
-    }
     public void addExtraction(Extraction ext) {
         if(!this.getExtModelMap().containsKey(ext.getId())){
             this.extractions.add(ext);
@@ -168,8 +183,12 @@ public class ExtractionModel extends AbstractTableModel {
         BurpExtender.getInstance().stdout.println("From getExtModelMap (size): " + mapAllExtracts.size());
         return mapAllExtracts;
     }
+    public static Map<String, Extraction> staticGetExtModelMap() {
+        BurpExtender.getInstance().stdout.println("From getExtModelMap (size): " + mapAllExtracts.size());
+        return mapAllExtracts;
+    }
     public List<Extraction> getExtList() {
         BurpExtender.getInstance().stdout.println("From getExtList (size): " + mapAllExtracts.size());
-        return ExtractionModel.extractions;
+        return GlobalExtractionModel.extractions;
     }
 }

@@ -5,6 +5,10 @@ public class ExtractReplace {
     private String id;
     private ExtractReplaceMethod extractReplaceMethod;
 
+    public ExtractReplace(){
+
+    }
+
     public ExtractReplace(String name, TransformTypes type){
         this.id = name;
         this.setType(type);

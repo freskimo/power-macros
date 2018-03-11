@@ -88,7 +88,7 @@ public class ConfigListener implements ActionListener {
 //                if (extender.isValidExtraction()) {
 //                    extender.stdout.println("[*] Creating extraction point");
 //                    String name = extender.getExtractionNameStringField().getText();
-//                    name = getNextExtName(name, extender.getExtractionModel().getExtModelMap());
+//                    name = getNextExtName(name, extender.getGlobalExtractions().getExtModelMap());
 //                    extender.getExtractionNameStringField().setText(name);
 //
 //                    Extraction ext = new Extraction(extender.getStartStringField().getText(),
@@ -99,7 +99,7 @@ public class ConfigListener implements ActionListener {
 //                    ext.setId(name);
 //                    ext.setMsgId(selectedMessage.getId());
 //
-//                    extender.getExtractionModel().addExtraction(ext);
+//                    extender.getGlobalExtractions().addExtraction(ext);
 //                    extender.stdout.println("[+] Adding new extraction: " + ext);
 //                }
 
@@ -124,7 +124,7 @@ public class ConfigListener implements ActionListener {
 //                    name = getNextRepName(name, extender.getReplaceModel().getRepModelMap());
 //                    extender.getReplaceNameStringField().setText(name);
 //
-//                    Extraction ext = extender.getExtractionModel().getExtraction(
+//                    Extraction ext = extender.getGlobalExtractions().getExtraction(
 //                            extender.getExtractionTable().getSelectedRow());
 //                    Replace rep = new Replace(name, extender.getReplaceStringField().getText(),
 //                            extender.getReplaceType().getSelectedItem().toString(), ext);
@@ -173,7 +173,7 @@ public class ConfigListener implements ActionListener {
 
             case A_DELETE_SEL_EXT:
 //                if (extender.getExtractionTable().getSelectedRow() >= 0) {
-//                    extender.getExtractionModel().removeRow(extender.getExtractionTable().getSelectedRow());
+//                    extender.getGlobalExtractions().removeRow(extender.getExtractionTable().getSelectedRow());
 //                }
                 break;
 
@@ -184,7 +184,7 @@ public class ConfigListener implements ActionListener {
                 break;
 
             case A_DELETE_ALL_EXT:
-//                extender.getExtractionModel().removeAll();
+//                extender.getGlobalExtractions().removeAll();
                 break;
 
             case A_DELETE_ALL_REP:

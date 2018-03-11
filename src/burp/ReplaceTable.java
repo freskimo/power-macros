@@ -20,7 +20,7 @@ public class ReplaceTable extends JTable {
         BurpExtender.println(Integer.toString(i) + "," + Integer.toString(i1));
 //
 //        if (i >= 0) {
-//            Replace rep = ((ReplaceModel) getModel()).getReplace(i);
+//            Replace rep = ((GlobalReplaceModel) getModel()).getReplace(i);
 //
 //            extender.getReplaceNameStringField().setText(rep.getId());
 //            extender.getReplaceStringField().setText(rep.getReplaceStr());
@@ -38,7 +38,7 @@ public class ReplaceTable extends JTable {
     }
 
     public void setSelectionById(String id) {
-        ReplaceModel model = (ReplaceModel) getModel();
+        GlobalReplaceModel model = (GlobalReplaceModel) getModel();
 
         changeSelection(model.getRowById(id), 0, false, false);
     }

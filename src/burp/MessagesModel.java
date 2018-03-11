@@ -118,12 +118,12 @@ public class MessagesModel extends AbstractTableModel {
 
         if (extractionTable != null) {
             for (String e : m.getExtRefSet()) {
-                ((ExtractionModel) (extractionTable.getModel())).remove(e);
+                ((GlobalExtractionModel) (extractionTable.getModel())).remove(e);
             }
         }
 //        if (replaceTable != null) {
 //            for (String r : m.getRepRefSet()) {
-//                ((ReplaceModel) (replaceTable.getModel())).remove(r);
+//                ((GlobalReplaceModel) (replaceTable.getModel())).remove(r);
 //            }
 //        }
         messagesMap.remove(m.getId());
@@ -138,10 +138,10 @@ public class MessagesModel extends AbstractTableModel {
 //        messages.clear();
 //
 //        if (extractionTable != null) {
-//            ((ExtractionModel) (extractionTable.getModel())).removeAll();
+//            ((GlobalExtractionModel) (extractionTable.getModel())).removeAll();
 //        }
 //        if (extractionTable != null) {
-//            ((ReplaceModel) (replaceTable.getModel())).removeAll();
+//            ((GlobalReplaceModel) (replaceTable.getModel())).removeAll();
 //        }
 //        fireTableDataChanged();
     }
