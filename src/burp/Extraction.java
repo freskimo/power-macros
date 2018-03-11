@@ -19,7 +19,7 @@ public class Extraction extends ExtractReplace {
 
 
     public String getExtractionString(String request){
-        return this.getExtractReplaceMethod().getExtractionString(request);
+        return this.getExtractReplaceMethod().getReplacedExtraction(request);
     }
 
     @Override

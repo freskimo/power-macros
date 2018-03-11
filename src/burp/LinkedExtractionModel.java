@@ -9,28 +9,25 @@ import java.util.Map;
 /**
  * Created by fruh on 9/8/16.
  */
-public class ExtractionModel extends AbstractTableModel {
+public class LinkedExtractionModel extends AbstractTableModel {
 
-    private static List<Extraction> extractions = new LinkedList<>();
-    private static Map<String, Extraction> mapAllExtracts = new HashMap<>();
+    private Replace linkedReplacement;
+    private  List<Extraction> extractions = new LinkedList<>();
+    private Map<String, Extraction> linkedExtracts = new HashMap<>();
 
     private String[] cols = {"Name", "Type"};
-    private Replace linkedReplacement;
 
-    public ExtractionModel() {
+
+    public LinkedExtractionModel() {
 
     }
-    public ExtractionModel(Replace linkedReplacement) {
+
+    public LinkedExtractionModel(Replace replaceToEdit) {
         this();
-        this.linkedReplacement = linkedReplacement;
+        this.linkedReplacement = replaceToEdit;
+//        this.extractions = replaceToEdit.getExtractionModel().getExtList();
+        this.addExtractions(replaceToEdit.getExtractionModel().getExtList());
     }
-
-    public ExtractionModel(Replace linkedReplacement, Extraction extList[]) {
-       this(linkedReplacement);
-       this.addExtractions(extList);
-    }
-
-
 
     @Override
     public int getRowCount() {
@@ -58,10 +55,8 @@ public class ExtractionModel extends AbstractTableModel {
     }
 
     public Extraction getExtractionById(String id) {
-        return mapAllExtracts.get(id);
+        return linkedExtracts.get(id);
     }
-
-
 
     @Override
     public Object getValueAt(int row, int col) {
@@ -88,7 +83,6 @@ public class ExtractionModel extends AbstractTableModel {
         int row = getRowById(id);
         removeRow(row);
     }
-
     public void removeRow(int row) {
 //        Extraction e = extractions.get(row);
 //
@@ -98,12 +92,11 @@ public class ExtractionModel extends AbstractTableModel {
 //        for (String r:e.getRepRefSet()) {
 //            extender.getReplaceModel().remove(r);
 //        }
-//        mapAllExtracts.remove(extractions.get(row).getId());
+//        linkedExtracts.remove(extractions.get(row).getId());
 //        extractions.remove(row);
 //;
 //        fireTableRowsDeleted(row, row);
     }
-
     public void removeAll() {
 //        for (Extraction e:extractions) {
 //            for (Message m : extender.getMessagesModel().getMessages()) {
@@ -114,17 +107,15 @@ public class ExtractionModel extends AbstractTableModel {
 //            m.getExtRefSet().clear();
 //        }
 //        extractions.clear();
-//        mapAllExtracts.clear();
+//        linkedExtracts.clear();
 //
 //        // delete references
 //        extender.getReplaceModel().removeAll();
 //
 //        fireTableDataChanged();
     }
-
     public int getRowById(String id) {
         int row = -1;
-
         if (extractions.size() > 0) {
             for (row = 0; row < extractions.size(); row++) {
                 if (id .equals(extractions.get(row).getId())) {
@@ -144,8 +135,8 @@ public class ExtractionModel extends AbstractTableModel {
 //                BurpExtender.getInstance().stdout.println("Extraction string: " + extraction.getReplacedExtraction(request));
 //                BurpExtender.getInstance().stdout.println("Replacement string: " + this.linkedReplacement.getExtractReplaceMethod().getReplacedExtraction(request));
 //                BurpExtender.getInstance().stdout.println("-------------------------------\n");
-                request = request.replace(extraction.getExtractionString(request),
-                        this.linkedReplacement.getExtractReplaceMethod().getReplacedExtraction(request));
+            request = request.replace(extraction.getExtractionString(request),
+                    this.linkedReplacement.getExtractReplaceMethod().getReplacedExtraction(request));
 
 //            }
         }
@@ -155,7 +146,7 @@ public class ExtractionModel extends AbstractTableModel {
     public void addExtraction(Extraction ext) {
         if(!this.getExtModelMap().containsKey(ext.getId())){
             this.extractions.add(ext);
-            mapAllExtracts.put(ext.getId(), ext);
+            linkedExtracts.put(ext.getId(), ext);
             fireTableRowsInserted(extractions.size() - 1, extractions.size() - 1);
         }
     }
@@ -164,12 +155,14 @@ public class ExtractionModel extends AbstractTableModel {
             this.addExtraction(ext);
         }
     }
-    public Map<String, Extraction> getExtModelMap() {
-        BurpExtender.getInstance().stdout.println("From getExtModelMap (size): " + mapAllExtracts.size());
-        return mapAllExtracts;
+    public void addExtractions(List<Extraction> extList){
+        for (Extraction ext: extList) {
+            this.addExtraction(ext);
+        }
     }
-    public List<Extraction> getExtList() {
-        BurpExtender.getInstance().stdout.println("From getExtList (size): " + mapAllExtracts.size());
-        return ExtractionModel.extractions;
+
+
+    public Map<String, Extraction> getExtModelMap() {
+        return linkedExtracts;
     }
 }

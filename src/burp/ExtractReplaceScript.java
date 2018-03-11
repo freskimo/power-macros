@@ -22,7 +22,7 @@ public class ExtractReplaceScript extends ExtractReplaceMethod {
     //Script takes the request/response string as input to its function
     //Script can dynamically decide what the extraction regex should be
     //    based on the request/response details.
-    public String getExtractionString(String requestResponse)  {
+    public String getReplacedExtraction(String requestResponse)  {
         ScriptEngineManager factory = new ScriptEngineManager();
         // escape all the single quotes or do other required modifications to the body
 
@@ -33,7 +33,7 @@ public class ExtractReplaceScript extends ExtractReplaceMethod {
         try{ //TODO
             engine.eval(new java.io.FileReader(this.scriptPath));
         }catch(Exception e){
-            BurpExtender.getInstance().stdout.println("getExtractionString SCRIPT FAILURE: " + e.getMessage());
+            BurpExtender.getInstance().stdout.println("getReplacedExtraction SCRIPT FAILURE: " + e.getMessage());
         }
 
         // read the result variable from the js
@@ -98,5 +98,10 @@ public class ExtractReplaceScript extends ExtractReplaceMethod {
         Object res = engine.get("result");
         // and return it
         return res.toString();
+    }
+
+    @Override
+    public String getExtractionArgument() {
+        return scriptPath;
     }
 }

@@ -6,6 +6,8 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -61,6 +63,8 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
     private JButton addReplacementButton;
     private JButton removeExtractionButton;
     private JButton editExtractionButton;
+    private JButton getSelectedButton;
+    private JButton getExtractSelectedButton;
 
     private DebugUtilities debugUtilities;
     private long lastExtractionTime = 0L;
@@ -78,19 +82,28 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
                     onAddReplacement();
                 }
             });
-
             INSTANCE = this;
 
+            extractTableModel = new ExtractionModel();
+            replaceTableModel = new ReplaceModel();
 
+            extractTable.setModel(extractTableModel);
+            replaceTable.setModel(replaceTableModel);
         }
         editReplacementButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AddReplacement addExtractForm = new AddReplacement();
+//                int[] i = replaceTable.getSelectedRows();
+//                BurpExtender.println(Integer.toString(i.length));
+                BurpExtender.println(Integer.toString(replaceTable.getSelectedRow()));
 
+
+                AddReplacement addExtractForm = new AddReplacement
+                        (replaceTableModel.getReplace(replaceTable.getSelectedRow()));
+//
                 addExtractForm.setTitle("Edit replacement...");
-                //https://stackoverflow.com/questions/12988896/jframe-fixed-width
-                addExtractForm.setSize(new Dimension (400, 210));
+//                //https://stackoverflow.com/questions/12988896/jframe-fixed-width
+                addExtractForm.setSize(new Dimension (400, 454));
                 addExtractForm.setResizable(false);
                 addExtractForm.setVisible(true);
             }
@@ -107,11 +120,37 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
                 addExtractForm.setVisible(true);
             }
         });
+        getSelectedButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                stdout.println(replaceTable.getSelectedRow());
+            }
+        });
+        getExtractSelectedButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                stdout.println(extractTable.getSelectedRow());
+            }
+        });
     }
+
+    private void dbgTable(){
+        TableTest dbg = new TableTest();
+
+        dbg.setSize(new Dimension(400,400));
+        dbg.setVisible(true);
+
+    }
+
+    public static void println(String msg){
+        BurpExtender.getInstance().stdout.println(msg);
+    }
+
 
     @Override
     public void processHttpMessage(int toolFlag, boolean messageIsRequest, IHttpRequestResponse messageInfo) {
-//        if (messageIsRequest) {
+
+        //        if (messageIsRequest) {
 //
 //            for (Replace r: this.getReplacementModel().getReplaces()) {
 //                String newRequest = new String(messageInfo.getRequest());
@@ -127,10 +166,11 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
 //        }
     }
     private void onAddReplacement(){
+
         AddReplacement addReplacementForm = new AddReplacement();
         addReplacementForm.setTitle("Add replacement...");
         //https://stackoverflow.com/questions/12988896/jframe-fixed-width
-        addReplacementForm.setSize(new Dimension (294, 454));
+        addReplacementForm.setSize(new Dimension (400, 454));
         addReplacementForm.setResizable(false);
         addReplacementForm.setVisible(true);
     }
@@ -152,10 +192,13 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
+
     }
 
     private void initGui() {
+
         debugUtilities = new DebugUtilities(this);
+
     }
     /**
      * Check whether it is possible to create extraction point.
@@ -197,7 +240,6 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
 
 
         initGui();
-        createUIComponents();
 
         // register callbacks
         callbacks.registerHttpListener(this);
@@ -209,26 +251,19 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
         stdout.println("[*] " + EXTENSION_NAME + " " + VERSION);
         stdout.println("Starting debug utilities");
 
+//        dbgTable();
     }
 
     @Override
     public String getTabCaption() {
         return EXTENSION_NAME_TAB_NAME;
     }
-    @Override
+//    @Override
     public Component getUiComponent() {
         return tabbedPane1;
     }
 
-    private void createUIComponents() {
-        extractTable = new JTable();
-        extractTableModel = new ExtractionModel();
-        extractTable.setModel(extractTableModel);
 
-        replaceTable = new JTable();
-        replaceTableModel = new ReplaceModel(this);
-        replaceTable.setModel(replaceTableModel);
-    }
     @Override
     public String getActionName() { return "ENHANCED MACROS"; }
 

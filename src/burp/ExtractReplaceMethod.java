@@ -14,7 +14,8 @@ public abstract class ExtractReplaceMethod {
         this.replace = replace;
     }
 
-    public abstract String getExtractionString(String requestResponse);
+    public abstract String getReplacedExtraction(String requestResponse);
+    public abstract String getExtractionArgument();
     public String doReplace(){
         return "";
     }

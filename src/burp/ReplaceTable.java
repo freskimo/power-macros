@@ -16,7 +16,8 @@ public class ReplaceTable extends JTable {
 
     @Override
     public void changeSelection(int i, int i1, boolean b, boolean b1) {
-//        super.changeSelection(i, i1, b, b1);
+        super.changeSelection(i, i1, b, b1);
+        BurpExtender.println(Integer.toString(i) + "," + Integer.toString(i1));
 //
 //        if (i >= 0) {
 //            Replace rep = ((ReplaceModel) getModel()).getReplace(i);

@@ -10,19 +10,21 @@ import java.util.Map;
  * Created by fruh on 9/8/16.
  */
 public class ReplaceModel extends AbstractTableModel {
-    private List<Replace> replacesLast;
-    private List<Replace> replaces;
-    private Map<String, Replace> repModelMap;
-    private BurpExtender extender;
+    private static List<Replace> replacesLast  = new LinkedList<>();
+    private static List<Replace> replaces = new LinkedList<>();
+    private static Map<String, Replace> repModelMap = new HashMap<>();
     private String[] cols = {"Linked extraction", "Replacement name", "Extraction type", "Replacement type"};
     BurpAction burpAction;
-    public ReplaceModel(BurpExtender extender) {
-        this.extender = extender;
-        replaces = new LinkedList<>();
-        replacesLast = new LinkedList<>();
-        repModelMap = new HashMap<>();
-  }
 
+    public void addReplace(Replace rep) {
+        if(!this.getRepModelMap().containsKey(rep.getId())){
+            this.replaces.add(rep);
+            repModelMap.put(rep.getId(), rep);
+            fireTableRowsInserted(replaces.size() - 1, replaces.size() - 1);
+            burpAction = new BurpAction(rep);
+            BurpExtender.getInstance().callbacks.registerSessionHandlingAction(burpAction);
+        }
+    }
     @Override
     public int getRowCount() {
         return replaces.size();
@@ -76,8 +78,6 @@ public class ReplaceModel extends AbstractTableModel {
                 }else{
                     ret = getReplace(row).getExtractionModel().getExtraction(0).getId();
                 }
-
-
                 break;
 
             case 1:
@@ -129,15 +129,6 @@ public class ReplaceModel extends AbstractTableModel {
         replacesLast.clear();
 
         fireTableDataChanged();
-    }
-
-    public void addReplace(Replace rep) {
-        this.replaces.add(rep);
-        repModelMap.put(rep.getId(), rep);
-        fireTableRowsInserted(replaces.size() - 1, replaces.size() - 1);
-        burpAction = new BurpAction(rep);
-        extender.callbacks.registerSessionHandlingAction(burpAction);
-
     }
 
     public void addReplaceLast(Replace rep) {

@@ -17,7 +17,7 @@ public class ExtractReplaceStartStop extends ExtractReplaceMethod {
     }
 
     @Override
-    public String getExtractionString(String requestResponse) {
+    public String getReplacedExtraction(String requestResponse) {
             String ret = "EXTRACTION_ERROR";
             int index_of_start = requestResponse.indexOf(this.startString);
 
@@ -31,5 +31,9 @@ public class ExtractReplaceStartStop extends ExtractReplaceMethod {
                 }
             }
             return ret;
+    }
+    @Override
+    public String getExtractionArgument() {
+        return startString + stopString;
     }
 }

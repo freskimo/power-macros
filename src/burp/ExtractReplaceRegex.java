@@ -13,7 +13,15 @@ public class ExtractReplaceRegex extends ExtractReplaceMethod {
     }
 
     @Override
-    public String getExtractionString(String requestResponse) {
+    public String getReplacedExtraction(String requestResponse) {
         return regexStr;
     }
+
+    @Override
+    public String getExtractionArgument() {
+        return regexStr;
+    }
+
+
+
 }

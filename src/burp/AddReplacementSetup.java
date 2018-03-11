@@ -2,21 +2,21 @@ package burp;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.Map;
 
 public class AddReplacementSetup extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
     private JComboBox cboType;
-    private JFormattedTextField formattedTextField1;
-    private JButton button1;
-    private JTextField textField1;
+    private JComboBox cboLinkExtract;
 
     public AddReplacementSetup() {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
-        addReplacementTypesToCombo();
+
+        addExtractionsToCombo();
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onOK();
@@ -44,12 +44,13 @@ public class AddReplacementSetup extends JDialog {
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
-
-    private void addReplacementTypesToCombo(){
-        for (TransformTypes type:  TransformTypes.values()) {
-            cboType.addItem(type.text());
+    private void addExtractionsToCombo(){
+        Map<String, Extraction> extModelMap = BurpExtender.extractTableModel.getExtModelMap();
+        for (Map.Entry<String, Extraction> entry:  extModelMap.entrySet()) {
+            cboLinkExtract.addItem(entry.getKey());
         }
     }
+
 
     private void onOK() {
         // add your code here
