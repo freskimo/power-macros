@@ -83,7 +83,7 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
                 Replace replaceEdit = replaceTableModel.getReplace(replaceTable.getSelectedRow());
 
                 BurpExtender.getInstance().stdout.println
-                        (replaceEdit.getId() + ": " + replaceEdit.getLinkedExtracts().getRowCount());
+                        (replaceEdit.getId() + ": " + replaceEdit.getLinkedExtractMap().size());
                 AddReplacement addExtractForm = new AddReplacement
                         (replaceTableModel.getReplace(replaceTable.getSelectedRow()));
                 addExtractForm.setTitle("Edit replacement...");

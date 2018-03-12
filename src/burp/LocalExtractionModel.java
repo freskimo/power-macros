@@ -1,10 +1,7 @@
 package burp;
 
 import javax.swing.table.AbstractTableModel;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by fruh on 9/8/16.
@@ -23,7 +20,7 @@ public class LocalExtractionModel extends AbstractTableModel {
     public LocalExtractionModel(Replace linkedReplacement) {
         this();
         this.linkedReplacement = linkedReplacement;
-        this.extractions = linkedReplacement.getLinkedExtracts().getExtractions();
+        this.extractions = new ArrayList<>(linkedReplacement.getLinkedExtractMap().values());
     }
 
     public LocalExtractionModel(Replace linkedReplacement, Extraction extList[]) {

@@ -11,8 +11,8 @@ import java.util.Map;
  */
 public class GlobalExtractionModel extends AbstractTableModel {
 
-    private static List<Extraction> extractions = new LinkedList<>();
-    private static Map<String, Extraction> mapAllExtracts = new HashMap<>();
+    private static List<Extraction> extractions = ExtractManager.getExtractionList();
+    private static Map<String, Extraction> mapAllExtracts = ExtractManager.getExtModelMap();
 
 
     private String[] cols = {"Name", "Type"};
@@ -28,10 +28,6 @@ public class GlobalExtractionModel extends AbstractTableModel {
         this.linkedReplacement = linkedReplacement;
     }
 
-    public GlobalExtractionModel(Replace linkedReplacement, Extraction extList[]) {
-       this(linkedReplacement);
-       this.addExtractions(extList);
-    }
 
 
 
@@ -167,28 +163,10 @@ public class GlobalExtractionModel extends AbstractTableModel {
 //        return request;
 //    }
 
-    public void addExtraction(Extraction ext) {
-        if(!this.getExtModelMap().containsKey(ext.getId())){
-            this.extractions.add(ext);
-            mapAllExtracts.put(ext.getId(), ext);
-            fireTableRowsInserted(extractions.size() - 1, extractions.size() - 1);
-        }
-    }
-    public void addExtractions(Extraction extList[]){
-        for (Extraction ext: extList) {
-            this.addExtraction(ext);
-        }
-    }
+
     public Map<String, Extraction> getExtModelMap() {
         BurpExtender.getInstance().stdout.println("From getExtModelMap (size): " + mapAllExtracts.size());
         return mapAllExtracts;
     }
-    public static Map<String, Extraction> staticGetExtModelMap() {
-        BurpExtender.getInstance().stdout.println("From getExtModelMap (size): " + mapAllExtracts.size());
-        return mapAllExtracts;
-    }
-    public List<Extraction> getExtList() {
-        BurpExtender.getInstance().stdout.println("From getExtList (size): " + mapAllExtracts.size());
-        return GlobalExtractionModel.extractions;
-    }
+
 }

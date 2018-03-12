@@ -150,10 +150,10 @@ public class AddReplacement extends JDialog {
 
         addExtractForm.setTitle("Setup new replacement");
         //https://stackoverflow.com/questions/12988896/jframe-fixed-width
-        BurpExtender.getInstance().stdout.println("Linked extracts before: " + oldReplaceToEdit.getLinkedExtracts().getRowCount());
+        BurpExtender.getInstance().stdout.println("Linked extracts before: " + oldReplaceToEdit.getLinkedExtractMap().size());
         this.oldReplaceToEdit = addExtractForm.showDialog();
 
-        BurpExtender.getInstance().stdout.println("Linked extracts after: " + oldReplaceToEdit.getLinkedExtracts().getRowCount());
+        BurpExtender.getInstance().stdout.println("Linked extracts after: " + oldReplaceToEdit.getLinkedExtractMap().size());
         this.extractionModel = new LocalExtractionModel(oldReplaceToEdit);
         this.extractTable.setModel(this.extractionModel);
     }

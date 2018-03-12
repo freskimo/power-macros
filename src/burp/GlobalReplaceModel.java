@@ -11,29 +11,25 @@ import java.util.Map;
  */
 public class GlobalReplaceModel extends AbstractTableModel {
     private static List<Replace> replacesLast  = new LinkedList<>();
-    private static List<Replace> replaces = new LinkedList<>();
-    private static Map<String, Replace> repModelMap = new HashMap<>();
+
+    private static Map<String, Replace> repModelMap = ReplaceManager.getRepModelMap();
+    private static List<Replace> replaces = ReplaceManager.getReplacementList();
+
+
     private String[] cols = {"Linked extraction", "Replacement name", "Extraction type", "Replacement type"};
     BurpAction burpAction;
 
-    public void addReplace(Replace rep) {
-        if(!this.getRepModelMap().containsKey(rep.getId())){
-            this.replaces.add(rep);
-            repModelMap.put(rep.getId(), rep);
-            fireTableRowsInserted(replaces.size() - 1, replaces.size() - 1);
-            burpAction = new BurpAction(rep);
-            BurpExtender.getInstance().callbacks.registerSessionHandlingAction(burpAction);
-        }
+    public GlobalReplaceModel(){
+        loadRows();
     }
 
-    public static void _updateReplace(Replace r){
-        BurpExtender.getInstance().stdout.println("UPDATING GLOBAL REPLACE");
-        repModelMap.put(r.getId(), r);
+    public void loadRows(){
 
-        replaces.clear();
-        replaces.addAll(repModelMap.values());
-
+        fireTableRowsInserted(replaces.size() - 1, replaces.size() - 1);
+//        burpAction = new BurpAction(rep);
+//        BurpExtender.getInstance().callbacks.registerSessionHandlingAction(burpAction);
     }
+
 
     @Override
     public int getRowCount() {
@@ -83,10 +79,10 @@ public class GlobalReplaceModel extends AbstractTableModel {
 
         switch (col) {
             case 0:
-                if(getReplace(row).getGlobalExtractions().getRowCount() > 1){
+                if(getReplace(row).getLinkedExtractMap().size() > 1){
                     ret = "[Multiple]";
                 }else{
-                    ret = getReplace(row).getGlobalExtractions().getExtraction(0).getId();
+                    ret = getReplace(row).getLinkedExtractList().get(0).getId();
                 }
                 break;
 
@@ -95,10 +91,10 @@ public class GlobalReplaceModel extends AbstractTableModel {
                 break;
 
             case 2:
-                if(getReplace(row).getGlobalExtractions().getRowCount() > 1){
+                if(getReplace(row).getLinkedExtractMap().size() > 1){
                     ret = "[Multiple]";
                 }else{
-                    ret = getReplace(row).getGlobalExtractions().getExtraction(0).getTypeString();
+                    ret = getReplace(row).getLinkedExtractList().get(0).getTypeString();
                 }
                 break;
 
@@ -142,16 +138,13 @@ public class GlobalReplaceModel extends AbstractTableModel {
     }
 
     public void addReplaceLast(Replace rep) {
-        this.replaces.add(rep);
-        this.replacesLast.add(rep);
+        replaces.add(rep);
+        replacesLast.add(rep);
         repModelMap.put(rep.getId(), rep);
 
         fireTableRowsInserted(replaces.size() - 1, replaces.size() - 1);
     }
 
-    public List<Replace> getReplaces() {
-        return replaces;
-    }
 
     public List<Replace> getReplacesLast() {
         return replacesLast;

@@ -95,7 +95,7 @@ public class AddExtraction extends JDialog {
     private void onOK() {
         String typeArgs[] = {"R"};
         Extraction newExtraction = new Extraction(txtName.getText(), cboType.getSelectedItem().toString(), typeArgs);
-        extender.getExtractionModel().addExtraction(newExtraction);
+        ExtractManager.addExtraction(newExtraction);
         dispose();
     }
 
