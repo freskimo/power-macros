@@ -1,5 +1,14 @@
 package burp;
 
+import powermacros.debug.DebugUtilities;
+import powermacros.extract.ExtractManager;
+import powermacros.forms.AddExtraction;
+import powermacros.forms.MainTab.MainExtractTableModel;
+import powermacros.forms.MainTab.MainReplaceTableModel;
+import powermacros.forms.AddReplacement;
+import powermacros.replace.Replace;
+import powermacros.replace.ReplaceManager;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -39,10 +48,10 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
     private JTabbedPane tabbedPane1;
 
     private JTable extractTable;
-    public static GlobalExtractionModel extractTableModel;
+    public static MainExtractTableModel mainExtractTableModel;
 
     public JTable replaceTable;
-    public static GlobalReplaceModel replaceTableModel;
+    public static MainReplaceTableModel replaceTableModel;
 
     private JButton addExtractionButton;
     private JButton removeReplacementButton;
@@ -50,8 +59,6 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
     private JButton addReplacementButton;
     private JButton removeExtractionButton;
     private JButton editExtractionButton;
-    private JButton getSelectedButton;
-    private JButton getExtractSelectedButton;
 
     private DebugUtilities debugUtilities;
     private long lastExtractionTime = 0L;
@@ -70,27 +77,26 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
                 }
             });
             INSTANCE = this;
+            debugUtilities = new DebugUtilities(this);
+            mainExtractTableModel = new MainExtractTableModel();
+            replaceTableModel = new MainReplaceTableModel();
 
-            extractTableModel = new GlobalExtractionModel();
-            replaceTableModel = new GlobalReplaceModel();
-
-            extractTable.setModel(extractTableModel);
+            extractTable.setModel(mainExtractTableModel);
             replaceTable.setModel(replaceTableModel);
         }
         editReplacementButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Replace replaceEdit = replaceTableModel.getReplace(replaceTable.getSelectedRow());
+                Replace replaceEdit = ReplaceManager.getReplace(replaceTable.getSelectedRow());
 
                 BurpExtender.getInstance().stdout.println
-                        (replaceEdit.getId() + ": " + replaceEdit.getLinkedExtractMap().size());
-                AddReplacement addExtractForm = new AddReplacement
-                        (replaceTableModel.getReplace(replaceTable.getSelectedRow()));
+                        (replaceEdit.getId() + ": " + replaceEdit.linkedExtracts.getLinkedExtractMap().size());
+                AddReplacement addExtractForm = new AddReplacement(replaceEdit);
                 addExtractForm.setTitle("Edit replacement...");
                 addExtractForm.setSize(new Dimension (400, 454));
                 addExtractForm.setResizable(false);
                 addExtractForm.setVisible(true);
-                replaceEdit.addLinkedExtraction(GlobalExtractionModel._getExtraction(3));
+                replaceEdit.addLinkedExtraction(ExtractManager.getExtraction(3));
             }
         });
         editExtractionButton.addActionListener(new ActionListener() {
@@ -105,26 +111,6 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
                 addExtractForm.setVisible(true);
             }
         });
-        getSelectedButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                stdout.println(replaceTable.getSelectedRow());
-            }
-        });
-        getExtractSelectedButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                stdout.println(extractTable.getSelectedRow());
-            }
-        });
-    }
-
-    private void dbgTable(){
-        TableTest dbg = new TableTest();
-
-        dbg.setSize(new Dimension(400,400));
-        dbg.setVisible(true);
-
     }
 
     public static void println(String msg){
@@ -182,7 +168,7 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
 
     private void initGui() {
 
-        debugUtilities = new DebugUtilities(this);
+//        debugUtilities = new DebugUtilities(this);
 
     }
     /**
@@ -258,11 +244,10 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
 
     }
 
-    public GlobalExtractionModel getExtractionModel() {
-        return extractTableModel;
+    public MainExtractTableModel getExtractionModel() {
+        return mainExtractTableModel;
     }
-
-    public GlobalReplaceModel getReplacementModel() {
+    public MainReplaceTableModel getReplacementModel() {
         return replaceTableModel;
     }
 
