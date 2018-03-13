@@ -5,7 +5,7 @@ import powermacros.extract.ExtractManager;
 import powermacros.forms.AddExtraction;
 import powermacros.forms.MainTab.MainExtractTableModel;
 import powermacros.forms.MainTab.MainReplaceTableModel;
-import powermacros.forms.AddReplacement;
+import powermacros.forms.AddReplacement.AddReplacement;
 import powermacros.replace.Replace;
 import powermacros.replace.ReplaceManager;
 
@@ -89,8 +89,8 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
             public void actionPerformed(ActionEvent e) {
                 Replace replaceEdit = ReplaceManager.getReplace(replaceTable.getSelectedRow());
 
-                BurpExtender.getInstance().stdout.println
-                        (replaceEdit.getId() + ": " + replaceEdit.linkedExtracts.getLinkedExtractMap().size());
+//                BurpExtender.getInstance().stdout.println
+//                        (replaceEdit.getId() + ": " + replaceEdit.linkedExtracts.getLinkedExtractMap().size());
                 AddReplacement addExtractForm = new AddReplacement(replaceEdit);
                 addExtractForm.setTitle("Edit replacement...");
                 addExtractForm.setSize(new Dimension (400, 454));

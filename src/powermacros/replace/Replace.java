@@ -31,10 +31,6 @@ public class Replace extends ExtractReplace {
     }
 
 
-    public void setLinkedExtracts(List<Extraction> linkedExtracts) {
-        this.addLinkedExtractions(linkedExtracts);
-    }
-
     public Replace(String name, TransformTypes type, String[] typeArgs, List<Extraction> extList) {
         super(name, type);
         this.addLinkedExtractions(extList);

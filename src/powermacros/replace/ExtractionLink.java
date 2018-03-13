@@ -19,15 +19,26 @@ public class ExtractionLink {
     public Map<String, Extraction> getLinkedExtractMap() {
         return linkedExtracts;
     }
-
     public ArrayList<Extraction> getLinkedExtractList() {
         ArrayList<Extraction> rtnList = new ArrayList<>();
         rtnList.addAll(getLinkedExtractMap().values());
         return rtnList;
     }
 
+    public void remove(int extractIndex){
+        ArrayList<Extraction> tempExtracts = this.getLinkedExtractList();
+        String removeExtractId = tempExtracts.get(extractIndex).getId();
+        this.remove(removeExtractId);
+    }
+
+    public int size(){
+        return getLinkedExtractMap().size();
+    }
     public void setLinkedExtracts(Map<String, Extraction> linkedExtracts) {
         this.linkedExtracts = linkedExtracts;
+    }
+    public void remove(String extractId){
+        this.getLinkedExtractMap().remove(extractId);
     }
 
 

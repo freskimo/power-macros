@@ -1,8 +1,8 @@
-package powermacros.forms;
+package powermacros.forms.AddReplacement;
 
 import burp.BurpExtender;
-import powermacros.extract.LocalExtractionModel;
 import powermacros.replace.Replace;
+import powermacros.replace.ReplaceManager;
 import powermacros.transforms.TransformTypes;
 
 import javax.swing.*;
@@ -12,7 +12,6 @@ import java.awt.event.*;
 public class AddReplacement extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
-    private JButton buttonCancel;
 
     private JComboBox cboLinkExtract;
 
@@ -30,42 +29,38 @@ public class AddReplacement extends JDialog {
     private JLabel lblRegex;
     private JLabel lblPath;
 
-    private LocalExtractionModel extractionModel;
-
-    private Replace oldReplaceToEdit;
-    private Replace newReplaceToEdit;
+    private LinkedExtractsTableModel extractionModel;
+    private Replace replaceToEdit;
 
     public AddReplacement(Replace replaceToEdit){
         this();
-        this.oldReplaceToEdit = replaceToEdit;
-        this.newReplaceToEdit = oldReplaceToEdit;
+        this.replaceToEdit = replaceToEdit;
 
-        this.extractionModel = new LocalExtractionModel(replaceToEdit);
+        this.extractionModel = new LinkedExtractsTableModel(replaceToEdit);
         this.extractTable.setModel(this.extractionModel);
         this.setupEditFields();
-        BurpExtender.println("test");
     }
     public void setupEditFields(){
-        txtName.setText(oldReplaceToEdit.getId());
-        TransformTypes replaceType = oldReplaceToEdit.getType();
+        txtName.setText(replaceToEdit.getId());
+        TransformTypes replaceType = replaceToEdit.getType();
         cboType.setSelectedItem(replaceType.text());
 
         if(replaceType.equals(TransformTypes.REGEX)){
             fTxtRegex.setVisible(true);
-            fTxtRegex.setText(oldReplaceToEdit.getExtractReplaceMethod().getExtractionArgument());
+            fTxtRegex.setText(replaceToEdit.getExtractReplaceMethod().getExtractionArgument());
         }else if(replaceType.equals(TransformTypes.PYTHON) ||
                 replaceType.equals(TransformTypes.JAVASCRIPT)){
             txtPath.setVisible(true);
-            txtPath.setText(oldReplaceToEdit.getExtractReplaceMethod().getExtractionArgument());
+            txtPath.setText(replaceToEdit.getExtractReplaceMethod().getExtractionArgument());
         }
 
     }
 
     public AddReplacement() {
 
-        this.extractionModel = new LocalExtractionModel();
+        this.extractionModel = new LinkedExtractsTableModel();
         this.extractTable.setModel(extractionModel);
-        this.oldReplaceToEdit = new Replace();
+        this.replaceToEdit = new Replace();
 
         lblPath.setVisible(false);
         lblRegex.setVisible(false);
@@ -86,11 +81,7 @@ public class AddReplacement extends JDialog {
                 dispose();
             }
         });
-        buttonCancel.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        });
+
 
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -117,7 +108,7 @@ public class AddReplacement extends JDialog {
         editButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AddReplacementSetup addExtractForm = new AddReplacementSetup(oldReplaceToEdit);
+                AddReplacementSetup addExtractForm = new AddReplacementSetup(replaceToEdit);
 
                 addExtractForm.setTitle("Edit existing replacement");
                 //https://stackoverflow.com/questions/12988896/jframe-fixed-width
@@ -149,17 +140,28 @@ public class AddReplacement extends JDialog {
                 }
             }
         });
+        removeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onRemove();
+            }
+        });
+    }
+    private void onRemove(){
+        int index = extractTable.getSelectedRow();
+        replaceToEdit.linkedExtracts.remove(index);
+        extractionModel.removeRow(index);
     }
     private void onAdd(){
-        AddReplacementSetup addExtractForm = new AddReplacementSetup(oldReplaceToEdit);
+        AddReplacementSetup addExtractForm = new AddReplacementSetup(replaceToEdit);
 
         addExtractForm.setTitle("Setup new replacement");
         //https://stackoverflow.com/questions/12988896/jframe-fixed-width
-        BurpExtender.getInstance().stdout.println("Linked extracts before: " + oldReplaceToEdit.linkedExtracts.getLinkedExtractMap().size());
-        this.oldReplaceToEdit = addExtractForm.showDialog();
+        BurpExtender.getInstance().stdout.println("Linked extracts before: " + replaceToEdit.linkedExtracts.getLinkedExtractMap().size());
+        this.replaceToEdit = addExtractForm.showDialog();
 
-        BurpExtender.getInstance().stdout.println("Linked extracts after: " + oldReplaceToEdit.linkedExtracts.getLinkedExtractMap().size());
-        this.extractionModel = new LocalExtractionModel(oldReplaceToEdit);
+        BurpExtender.getInstance().stdout.println("Linked extracts after: " + replaceToEdit.linkedExtracts.getLinkedExtractMap().size());
+        this.extractionModel = new LinkedExtractsTableModel(replaceToEdit);
         this.extractTable.setModel(this.extractionModel);
     }
     private void addReplacementTypesToCombo(){
@@ -169,7 +171,7 @@ public class AddReplacement extends JDialog {
     }
     private void onOK() {
 
-//        MainReplaceTableModel._updateReplace(oldReplaceToEdit);
+//        MainReplaceTableModel._updateReplace(replaceToEdit);
         dispose();
     }
 

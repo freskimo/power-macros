@@ -1,4 +1,4 @@
-package powermacros.extract;
+package powermacros.forms.AddReplacement;
 
 import burp.BurpExtender;
 import burp.IExtensionHelpers;
@@ -11,28 +11,21 @@ import java.util.*;
 /**
  * Created by fruh on 9/8/16.
  */
-public class LocalExtractionModel extends AbstractTableModel {
+public class LinkedExtractsTableModel extends AbstractTableModel {
 
     private List<Extraction> extractions = new LinkedList<>();
-    private static Map<String, Extraction> mapAllExtracts = new HashMap<>();
 
     private String[] cols = {"Name", "Type"};
     private Replace linkedReplacement;
 
-    public LocalExtractionModel() {
+    public LinkedExtractsTableModel() {
 
     }
-    public LocalExtractionModel(Replace linkedReplacement) {
+    public LinkedExtractsTableModel(Replace linkedReplacement) {
         this();
         this.linkedReplacement = linkedReplacement;
-        this.extractions = new ArrayList<>(linkedReplacement.linkedExtracts.getLinkedExtractMap().values());
+        this.extractions = linkedReplacement.linkedExtracts.getLinkedExtractList();
     }
-
-    public LocalExtractionModel(Replace linkedReplacement, Extraction extList[]) {
-        this(linkedReplacement);
-        this.addExtractions(extList);
-    }
-
 
 
     @Override
@@ -60,9 +53,9 @@ public class LocalExtractionModel extends AbstractTableModel {
         return null;
     }
 
-    public Extraction getExtractionById(String id) {
-        return mapAllExtracts.get(id);
-    }
+//    public Extraction getExtractionById(String id) {
+//        return mapAllExtracts.get(id);
+//    }
 
 
 
@@ -87,24 +80,14 @@ public class LocalExtractionModel extends AbstractTableModel {
         return ret;
     }
 
-    public void remove(String id) {
-        int row = getRowById(id);
-        removeRow(row);
-    }
-
+//    public void remove(String id) {
+//        int row = getRowById(id);
+//        removeRow(row);
+//    }
+//
     public void removeRow(int row) {
-//        Extraction e = extractions.get(row);
-//
-//        // remove extraction reference
-//        extender.getMessagesModel().getMessageById(e.getMsgId()).getExtRefSet().remove(e.getId());
-//
-//        for (String r:e.getRepRefSet()) {
-//            extender.getReplaceModel().remove(r);
-//        }
-//        mapAllExtracts.remove(extractions.get(row).getId());
-//        extractions.remove(row);
-//;
-//        fireTableRowsDeleted(row, row);
+        extractions.remove(row);
+        fireTableRowsDeleted(row, row);
     }
 
     public void removeAll() {
@@ -155,24 +138,5 @@ public class LocalExtractionModel extends AbstractTableModel {
 
         return request;
     }
-    public void addExtraction(Extraction ext) {
-        if(!this.getExtModelMap().containsKey(ext.getId())){
-            this.extractions.add(ext);
-            mapAllExtracts.put(ext.getId(), ext);
-            fireTableRowsInserted(extractions.size() - 1, extractions.size() - 1);
-        }
-    }
-    public void addExtractions(Extraction extList[]){
-        for (Extraction ext: extList) {
-            this.addExtraction(ext);
-        }
-    }
-    public Map<String, Extraction> getExtModelMap() {
-        BurpExtender.getInstance().stdout.println("From getExtModelMap (size): " + mapAllExtracts.size());
-        return mapAllExtracts;
-    }
-    public List<Extraction> getExtList() {
-        BurpExtender.getInstance().stdout.println("From getExtList (size): " + mapAllExtracts.size());
-        return this.extractions;
-    }
+
 }
