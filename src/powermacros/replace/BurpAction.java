@@ -1,5 +1,6 @@
 package powermacros.replace;
 
+import burp.BurpExtender;
 import burp.IHttpRequestResponse;
 import burp.ISessionHandlingAction;
 import powermacros.replace.Replace;
@@ -24,7 +25,7 @@ public class BurpAction implements ISessionHandlingAction {
      */
     public BurpAction(Replace replacement){
         this.replacement = replacement;
-
+        BurpExtender.getInstance().callbacks.registerSessionHandlingAction(this);
     }
     @Override
     public String getActionName() {
@@ -51,9 +52,9 @@ public class BurpAction implements ISessionHandlingAction {
     public void performAction(IHttpRequestResponse currentRequest, IHttpRequestResponse[] macroItems) {
 
         String reqBody = replacement.replaceData(currentRequest);
-//        BurpExtender.getInstance().stdout.println("<<FINAL REQUEST:>>");
-//        BurpExtender.getInstance().stdout.println(reqBody);
-//        BurpExtender.getInstance().stdout.println("-------------------------------\n");
+        BurpExtender.getInstance().stdout.println("<<FINAL REQUEST:>>");
+        BurpExtender.getInstance().stdout.println(reqBody);
+        BurpExtender.getInstance().stdout.println("-------------------------------\n");
         currentRequest.setRequest(reqBody.getBytes()); //TODO should handle requests/response
     }
 }

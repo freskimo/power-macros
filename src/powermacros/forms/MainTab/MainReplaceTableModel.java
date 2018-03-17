@@ -16,7 +16,7 @@ import java.util.Map;
 public class MainReplaceTableModel extends AbstractTableModel {
 //    private static List<Replace> replacesLast  = new LinkedList<>();
     private String[] cols = {"Linked extraction", "Replacement name", "Extraction type", "Replacement type"};
-    BurpAction burpAction;
+
 
     public MainReplaceTableModel(){
 

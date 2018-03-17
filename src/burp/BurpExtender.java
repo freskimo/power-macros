@@ -19,7 +19,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuFactory, ITab, ISessionHandlingAction  {
+public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuFactory, ITab  {
     //TODO: Feature idea: Cascading extraction replacements like CSS (sequential replacements in order). Ability to set order
     //TODO: Feature idea: Ability to add post-processing python/ruby/JS script. After replacements are done, the request is passed to the script for final processing
     public static BurpExtender getInstance() {
@@ -79,7 +79,8 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
                 }
             });
             INSTANCE = this;
-            debugUtilities = new DebugUtilities(this);
+
+//            debugUtilities = new DebugUtilities(this);
             mainExtractTableModel = new MainExtractTableModel();
             replaceTableModel = new MainReplaceTableModel();
 
@@ -247,13 +248,12 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
         // register callbacks
         callbacks.registerHttpListener(this);
         callbacks.registerContextMenuFactory(this);
-        callbacks.registerSessionHandlingAction(this);
         // init gui callbacks
         callbacks.addSuiteTab(this);
 
         stdout.println("[*] " + EXTENSION_NAME + " " + VERSION);
         stdout.println("Starting debug utilities");
-
+        debugUtilities = new DebugUtilities(this);
 //        dbgTable();
     }
 
@@ -261,19 +261,9 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
     public String getTabCaption() {
         return EXTENSION_NAME_TAB_NAME;
     }
-//    @Override
+    @Override
     public Component getUiComponent() {
         return tabbedPane1;
-    }
-
-
-    @Override
-    public String getActionName() { return "ENHANCED MACROS"; }
-
-
-    @Override
-    public void performAction(IHttpRequestResponse currentRequest, IHttpRequestResponse[] macroItems) {
-
     }
 
     public MainExtractTableModel getExtractionModel() {

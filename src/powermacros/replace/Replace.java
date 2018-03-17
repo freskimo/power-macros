@@ -18,6 +18,9 @@ import java.util.Map;
 public class Replace extends ExtractReplace {
     private boolean urlDecode = false;
     public ExtractionLink linkedExtracts = new ExtractionLink();
+
+    BurpAction burpAction;
+
     public Replace(){ }
 
     public void addLinkedExtraction(Extraction ext) {
@@ -35,27 +38,24 @@ public class Replace extends ExtractReplace {
         super(name, type);
         this.addLinkedExtractions(extList);
         this.setExtractReplaceMethod(this, this.getType(), typeArgs);
+        burpAction = new BurpAction(this);
     }
 
     public Replace(String name, String type, String[] typeArgs, List<Extraction> extList) {
         this(name, TransformTypes.valueOf(type), typeArgs, extList);
+
     }
 
-
-    public String replaceData(IHttpRequestResponse request){
-        return this.replaceExtractions(new String(request.getRequest()),
-                        BurpExtender.getInstance().helpers
-        );
-    }
     @Override
     public String toString() { return ""; }
 
-    public String replaceExtractions(String request, IExtensionHelpers helpers) {
+    public String replaceData(IHttpRequestResponse request) {
+        String strRequest = new String(request.getRequest());
         for (Extraction extraction: this.linkedExtracts.getLinkedExtractMap().values()) {
-               request = request.replace(extraction.getExtractionString(request),
-                       this.getExtractReplaceMethod().getReplacedExtraction(request));
+               strRequest = strRequest.replace(extraction.getExtractionString(strRequest),
+                       this.getExtractReplaceMethod().getReplacedExtraction(strRequest));
         }
-        return request;
+        return strRequest;
     }
 
     public boolean isUrlDecode() {
