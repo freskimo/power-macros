@@ -3,6 +3,7 @@ package powermacros.replace;
 import powermacros.extract.ExtractManager;
 import powermacros.extract.Extraction;
 
+import java.io.BufferedWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,15 +25,15 @@ public class ReplaceManager {
         return rtnList;
     }
 
-    public static void putReplace(Replace rep) {
-//        if(!getRepModelMap().containsKey(rep.getId())){
-            repModelMap.put(rep.getId(), rep);
-//            burpAction = new BurpAction(rep);
-//            BurpExtender.getInstance().callbacks.registerSessionHandlingAction(burpAction);
-//        }else{
-//
-//        }
+    public static void save(BufferedWriter writer){
+
     }
+
+    public static void putReplace(Replace rep) {
+        repModelMap.put(rep.getId(), rep);
+    }
+
+
     public static void removeReplace(int i) {
         if(i >= 0){
             ArrayList<Replace> tempReplace = ReplaceManager.getReplacementList();

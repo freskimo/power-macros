@@ -1,5 +1,6 @@
 package burp;
 
+import com.google.gson.Gson;
 import powermacros.debug.DebugUtilities;
 import powermacros.extract.ExtractManager;
 import powermacros.extract.Extraction;
@@ -14,6 +15,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.HashSet;
 import java.util.Map;
@@ -61,10 +65,13 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
     private JButton addReplacementButton;
     private JButton removeExtractionButton;
     private JButton editExtractionButton;
+    private JButton saveSettingsButton;
+    private JButton loadSettingsButton;
 
     private DebugUtilities debugUtilities;
     private long lastExtractionTime = 0L;
 
+    private static JFrame frame;
     public BurpExtender() {
         if(INSTANCE == null){
             addExtractionButton.addActionListener(new ActionListener() {
@@ -124,6 +131,46 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
                 onReplaceRemove();
             }
         });
+        saveSettingsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onSaveSettings();
+            }
+        });
+        loadSettingsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onLoadSettings();
+            }
+        });
+    }
+
+    private void onSaveSettings(){
+        BufferedWriter writer = null;
+        Gson gson = new Gson();
+
+        try{
+            File settingsFile = new File("settings.json");
+            writer = new BufferedWriter(new FileWriter(settingsFile));
+            ReplaceManager.save(writer);
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            try{
+                writer.close();
+            }catch(Exception e){
+
+            }
+        }
+    }
+    private void onLoadSettings(){
+
+        FileDialog fc = new FileDialog(frame, "Choose settings file", FileDialog.LOAD);
+        fc.setVisible(true);
+        if(fc.getFile() != null){
+//            String path = fc.getDirectory() + fc.getFile();
+//            txtPath.setText(path);
+        }
     }
     private void onExtractRemove(){
         int index = extractTable.getSelectedRow();
@@ -191,7 +238,7 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
     //    private MessagesModel loggerMessagesModel;
     public static void main(String[] args) {
 
-        JFrame frame = new JFrame("BurpExtender");
+        frame = new JFrame("BurpExtender");
         frame.setContentPane(new BurpExtender().panel1);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();

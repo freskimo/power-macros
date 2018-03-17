@@ -147,6 +147,20 @@ public class AddReplacement extends JDialog {
                 onRemove();
             }
         });
+        btnPath.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onLoadScript();
+            }
+        });
+    }
+    private void onLoadScript(){
+        FileDialog fc = new FileDialog(this, "Choose a script file", FileDialog.LOAD);
+        fc.setVisible(true);
+        if(fc.getFile() != null){
+            String path = fc.getDirectory() + fc.getFile();
+            txtPath.setText(path);
+        }
     }
     private void onRemove(){
         int index = extractTable.getSelectedRow();

@@ -6,6 +6,7 @@ import powermacros.extract.Extraction;
 import powermacros.transforms.TransformTypes;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 
 public class AddExtraction extends JDialog {
@@ -97,6 +98,22 @@ public class AddExtraction extends JDialog {
                 }
             }
         });
+        btnPath.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+              onLoadScript();
+            }
+        });
+    }
+
+    private void onLoadScript(){
+        FileDialog fc = new FileDialog(this, "Choose a script file", FileDialog.LOAD);
+        fc.setVisible(true);
+        if(fc.getFile() != null){
+            String path = fc.getDirectory() + fc.getFile();
+            txtPath.setText(path);
+        }
+
     }
 
     private void addReplaceTypesToCombo(){
@@ -109,7 +126,16 @@ public class AddExtraction extends JDialog {
     }
 
     private void onOK() {
-        String typeArgs[] = {"R"};
+        String arg = "";
+        String selectedTransform = cboType.getSelectedItem().toString();
+
+        if(selectedTransform.equals(TransformTypes.REGEX.text())){
+            arg = fTxtRegex.getText();
+        }else if(selectedTransform.equals(TransformTypes.JAVASCRIPT.text()) ||
+                 selectedTransform.equals(TransformTypes.PYTHON.text())){
+            arg = txtPath.getText();
+        }
+        String typeArgs[] = {arg};
         Extraction newExtraction = new Extraction(txtName.getText(), cboType.getSelectedItem().toString(), typeArgs);
         ExtractManager.addExtraction(newExtraction);
         dispose();
