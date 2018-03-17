@@ -143,7 +143,7 @@ public class ConfigListener implements ActionListener {
 //                        selectedMsg.getRepRefSet().add(rep.getId());
 //                        rep.setMsgId(selectedMsg.getId());
 //
-//                        extender.getReplaceModel().addReplace(rep);
+//                        extender.getReplaceModel().putReplace(rep);
 //                    }
 //                    else {
 //                        rep.setMsgId("Burp");

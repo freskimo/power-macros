@@ -21,12 +21,14 @@ public class ReplaceManager {
         return rtnList;
     }
 
-    public static void addReplace(Replace rep) {
-        if(!getRepModelMap().containsKey(rep.getId())){
+    public static void putReplace(Replace rep) {
+//        if(!getRepModelMap().containsKey(rep.getId())){
             repModelMap.put(rep.getId(), rep);
 //            burpAction = new BurpAction(rep);
 //            BurpExtender.getInstance().callbacks.registerSessionHandlingAction(burpAction);
-        }
+//        }else{
+//
+//        }
     }
 
     public static ArrayList<Replace> getReplacementList() {

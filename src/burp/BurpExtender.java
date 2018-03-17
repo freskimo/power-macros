@@ -15,6 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.PrintWriter;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuFactory, ITab, ISessionHandlingAction  {
@@ -88,15 +89,11 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
             @Override
             public void actionPerformed(ActionEvent e) {
                 Replace replaceEdit = ReplaceManager.getReplace(replaceTable.getSelectedRow());
-
-//                BurpExtender.getInstance().stdout.println
-//                        (replaceEdit.getId() + ": " + replaceEdit.linkedExtracts.getLinkedExtractMap().size());
                 AddReplacement addExtractForm = new AddReplacement(replaceEdit);
                 addExtractForm.setTitle("Edit replacement...");
                 addExtractForm.setSize(new Dimension (400, 454));
                 addExtractForm.setResizable(false);
                 addExtractForm.setVisible(true);
-                replaceEdit.addLinkedExtraction(ExtractManager.getExtraction(3));
             }
         });
         editExtractionButton.addActionListener(new ActionListener() {

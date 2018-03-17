@@ -8,6 +8,7 @@ import powermacros.transforms.TransformTypes;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Map;
 
 public class AddReplacement extends JDialog {
     private JPanel contentPane;
@@ -151,6 +152,8 @@ public class AddReplacement extends JDialog {
         int index = extractTable.getSelectedRow();
         replaceToEdit.linkedExtracts.remove(index);
         extractionModel.removeRow(index);
+
+
     }
     private void onAdd(){
         AddReplacementSetup addExtractForm = new AddReplacementSetup(replaceToEdit);
