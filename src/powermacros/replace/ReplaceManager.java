@@ -1,5 +1,8 @@
 package powermacros.replace;
 
+import powermacros.extract.ExtractManager;
+import powermacros.extract.Extraction;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,6 +32,13 @@ public class ReplaceManager {
 //        }else{
 //
 //        }
+    }
+    public static void removeReplace(int i) {
+        if(i >= 0){
+            ArrayList<Replace> tempReplace = ReplaceManager.getReplacementList();
+            String removeReplaceId = tempReplace.get(i).getId();
+            ReplaceManager.getRepModelMap().remove(removeReplaceId);
+        }
     }
 
     public static ArrayList<Replace> getReplacementList() {

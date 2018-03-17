@@ -27,4 +27,13 @@ public enum TransformTypes {
             return false;
         }
     }
+
+    public static TransformTypes fromText(String text) {
+        for(TransformTypes t: TransformTypes.values()){
+            if(t.text().equals(text)){
+                return t;
+            }
+        }
+        return null;
+    }
 }

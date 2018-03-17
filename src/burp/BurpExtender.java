@@ -2,6 +2,7 @@ package burp;
 
 import powermacros.debug.DebugUtilities;
 import powermacros.extract.ExtractManager;
+import powermacros.extract.Extraction;
 import powermacros.forms.AddExtraction;
 import powermacros.forms.MainTab.MainExtractTableModel;
 import powermacros.forms.MainTab.MainReplaceTableModel;
@@ -99,7 +100,9 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
         editExtractionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AddExtraction addExtractForm = new AddExtraction();
+                Extraction extractEdit = ExtractManager.getExtraction(extractTable.getSelectedRow());
+
+                AddExtraction addExtractForm = new AddExtraction(extractEdit);
 
                 addExtractForm.setTitle("Edit extraction...");
                 //https://stackoverflow.com/questions/12988896/jframe-fixed-width
@@ -108,8 +111,37 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
                 addExtractForm.setVisible(true);
             }
         });
+        removeExtractionButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onExtractRemove();
+            }
+        });
+        removeReplacementButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onReplaceRemove();
+            }
+        });
     }
-
+    private void onExtractRemove(){
+        int index = extractTable.getSelectedRow();
+        ExtractManager.removeExtraction(index);
+        this.updateExtractTable();
+    }
+    private void onReplaceRemove(){
+        int index = replaceTable.getSelectedRow();
+        ReplaceManager.removeReplace(index);
+        this.updateReplaceTable();
+    }
+    private void updateExtractTable(){
+        BurpExtender.mainExtractTableModel = new MainExtractTableModel();
+        this.extractTable.setModel(mainExtractTableModel);
+    }
+    private void updateReplaceTable(){
+        BurpExtender.replaceTableModel = new MainReplaceTableModel();
+        this.replaceTable.setModel(replaceTableModel);
+    }
     public static void println(String msg){
         BurpExtender.getInstance().stdout.println(msg);
     }
@@ -150,6 +182,9 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
             addExtractForm.setSize(new Dimension (400, 210));
             addExtractForm.setResizable(false);
             addExtractForm.setVisible(true);
+
+            BurpExtender.mainExtractTableModel = new MainExtractTableModel();
+            this.extractTable.setModel(mainExtractTableModel);
     }
 
     //    private MessagesModel loggerMessagesModel;

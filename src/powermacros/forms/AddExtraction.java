@@ -19,7 +19,27 @@ public class AddExtraction extends JDialog {
     private JLabel lblPath;
     private JButton btnPath;
 
+    private Extraction extractToEdit;
+    public AddExtraction(Extraction extractToEdit){
+        this();
+        this.extractToEdit = extractToEdit;
+        this.setupEditFields();
+    }
+    public void setupEditFields(){
+        txtName.setText(extractToEdit.getId());
+        TransformTypes replaceType = extractToEdit.getType();
+        cboType.setSelectedItem(replaceType.text());
 
+        if(replaceType.equals(TransformTypes.REGEX)){
+            fTxtRegex.setVisible(true);
+            fTxtRegex.setText(extractToEdit.getExtractReplaceMethod().getExtractionArgument());
+        }else if(replaceType.equals(TransformTypes.PYTHON) ||
+                replaceType.equals(TransformTypes.JAVASCRIPT)){
+            txtPath.setVisible(true);
+            txtPath.setText(extractToEdit.getExtractReplaceMethod().getExtractionArgument());
+        }
+
+    }
     public AddExtraction() {
         lblPath.setVisible(false);
         lblRegex.setVisible(false);

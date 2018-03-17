@@ -10,7 +10,7 @@ public class Extraction extends ExtractReplace {
         setExtractReplaceMethod(this, this.getType(), typeArgs);
     }
     public Extraction(String name, String type, String typeArgs[]){
-        super(name, TransformTypes.valueOf(type));
+        super(name, TransformTypes.fromText(type));
         setExtractReplaceMethod(this, this.getType(), typeArgs);
     }
 

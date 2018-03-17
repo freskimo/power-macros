@@ -1,5 +1,8 @@
 package powermacros.extract;
 
+import powermacros.replace.Replace;
+import powermacros.replace.ReplaceManager;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,7 +32,22 @@ public class ExtractManager {
         }
         return null;
     }
+    public static void removeExtraction(int i) {
+        if(i == -1){
+            return;
+        }
 
+        ArrayList<Extraction> tempExtracts = ExtractManager.getExtractionList();
+        String removeExtractId = tempExtracts.get(i).getId();
+
+        //Remove any linked extractions for the selected removal
+        for(Replace r: ReplaceManager.getReplacementList()){
+            r.linkedExtracts.remove(removeExtractId);
+        }
+
+
+        ExtractManager.getExtModelMap().remove(removeExtractId);
+    }
     public static void addExtraction(Extraction ext) {
         if(!getExtModelMap().containsKey(ext.getId())){
             extModelMap.put(ext.getId(), ext);

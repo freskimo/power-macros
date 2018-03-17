@@ -26,9 +26,11 @@ public class ExtractionLink {
     }
 
     public void remove(int extractIndex){
-        ArrayList<Extraction> tempExtracts = this.getLinkedExtractList();
-        String removeExtractId = tempExtracts.get(extractIndex).getId();
-        this.remove(removeExtractId);
+        if(extractIndex >= 0){
+            ArrayList<Extraction> tempExtracts = this.getLinkedExtractList();
+            String removeExtractId = tempExtracts.get(extractIndex).getId();
+            this.remove(removeExtractId);
+        }
     }
 
     public int size(){
