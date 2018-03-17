@@ -82,7 +82,9 @@ public class AddExtraction extends JDialog {
     private void addReplaceTypesToCombo(){
         cboType.addItem(" ...");
         for (TransformTypes type:  TransformTypes.values()) {
-            cboType.addItem(type.text());
+            if(type.isImplemented()){
+                cboType.addItem(type.text());
+            }
         }
     }
 

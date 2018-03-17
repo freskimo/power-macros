@@ -168,8 +168,11 @@ public class AddReplacement extends JDialog {
         this.extractTable.setModel(this.extractionModel);
     }
     private void addReplacementTypesToCombo(){
+
         for (TransformTypes type:  TransformTypes.values()) {
-            cboType.addItem(type.text());
+            if(type.isImplemented()){
+                cboType.addItem(type.text());
+            }
         }
     }
     private void onOK() {
