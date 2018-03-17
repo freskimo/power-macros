@@ -11,7 +11,6 @@ import java.awt.event.*;
 public class AddExtraction extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
-    private JButton buttonCancel;
     private JTextField txtName;
     private JComboBox cboType;
     private JTextField txtPath;
@@ -20,12 +19,8 @@ public class AddExtraction extends JDialog {
     private JLabel lblPath;
     private JButton btnPath;
 
-    private BurpExtender extender;
 
     public AddExtraction() {
-        this.extender = BurpExtender.getInstance();
-
-
         lblPath.setVisible(false);
         lblRegex.setVisible(false);
         btnPath.setVisible(false);
@@ -41,12 +36,6 @@ public class AddExtraction extends JDialog {
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onOK();
-            }
-        });
-
-        buttonCancel.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
             }
         });
 
