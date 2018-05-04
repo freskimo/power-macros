@@ -1,5 +1,6 @@
 package powermacros.transforms;
 
+import burp.BurpExtender;
 import powermacros.extract.Extraction;
 import powermacros.replace.Replace;
 import powermacros.transforms.TransformTypes;

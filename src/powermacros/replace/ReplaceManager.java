@@ -1,5 +1,6 @@
 package powermacros.replace;
 
+import burp.BurpExtender;
 import powermacros.extract.ExtractManager;
 import powermacros.extract.Extraction;
 
@@ -25,6 +26,7 @@ public class ReplaceManager {
     }
 
     public static void putReplace(Replace rep) {
+        BurpExtender.println(rep.getId());
         repModelMap.put(rep.getId(), rep);
     }
 
