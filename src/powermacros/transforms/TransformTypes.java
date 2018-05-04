@@ -1,7 +1,4 @@
 package powermacros.transforms;
-
-import java.util.ArrayList;
-
 public enum TransformTypes {
     STARTEND("Start/end string"),
     REGEX("Regex"),
@@ -16,12 +13,12 @@ public enum TransformTypes {
     }
 
     public String text() {
-        String formattedType = this.type.toLowerCase();
-        return formattedType.substring(0, 1).toUpperCase() + formattedType.substring(1);
+        return this.type;
     }
 
     public boolean isImplemented() {
-        if (this.equals(REGEX) || this.equals(JAVASCRIPT)) {
+        if (this.equals(REGEX) ||
+                this.equals(JAVASCRIPT)){
             return true;
         } else {
             return false;

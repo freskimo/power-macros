@@ -180,7 +180,7 @@ public class AddReplacement extends JDialog {
         this.extractTable.setModel(this.extractionModel);
     }
     private void addReplacementTypesToCombo(){
-
+        cboType.addItem(" ...");
         for (TransformTypes type:  TransformTypes.values()) {
             if(type.isImplemented()){
                 cboType.addItem(type.text());
@@ -188,7 +188,27 @@ public class AddReplacement extends JDialog {
         }
     }
     private void onOK() {
+        String arg = "";
+        String selectedTransform = cboType.getSelectedItem().toString();
 
+        if(selectedTransform.equals(TransformTypes.REGEX.text())){
+            arg = fTxtRegex.getText();
+        }else if(selectedTransform.equals(TransformTypes.JAVASCRIPT.text()) ||
+                selectedTransform.equals(TransformTypes.PYTHON.text())){
+            arg = txtPath.getText();
+        }
+//        String typeArgs[] = {arg};
+        String typeArgs = arg;
+
+        replaceToEdit.setId(txtName.getText());
+        replaceToEdit.setTypeString(selectedTransform);
+        replaceToEdit.getExtractReplaceMethod().setExtractionArgument(typeArgs);
+        ReplaceManager.putReplace(replaceToEdit);
+        //TODO: SET TYPE ARGUMENTS FOR REPLACE
+        //TODO: Update Replace in ReplaceManager
+//        replaceToEdit.set
+//        Replace newExtraction = new Replace(txtName.getText(), cboType.getSelectedItem().toString(), typeArgs);
+//        ExtractManager.put(newExtraction);
 //        MainReplaceTableModel._updateReplace(replaceToEdit);
         dispose();
     }

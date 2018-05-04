@@ -8,9 +8,11 @@ public class ExtractReplace {
     private String id;
     private ExtractReplaceMethod extractReplaceMethod;
 
+
     public ExtractReplace(){
 
     }
+
 
     public ExtractReplace(String name, TransformTypes type){
         this.id = name;
@@ -18,7 +20,7 @@ public class ExtractReplace {
     }
     public void setExtractReplaceMethod(Extraction extraction, TransformTypes type, String typeArgs[]) {
         if(this.getType().equals(TransformTypes.JAVASCRIPT) || this.getType().equals(TransformTypes.PYTHON)){
-            this.extractReplaceMethod = new ExtractReplaceScript(extraction, typeArgs[0]);
+            this.extractReplaceMethod = new ExtractReplaceScript(extraction, typeArgs[0], this.getType());
         }else if(this.getType().equals(TransformTypes.REGEX)){
             this.extractReplaceMethod = new ExtractReplaceRegex(extraction, typeArgs[0]);
         }else if(this.getType().equals(TransformTypes.STARTEND)){
@@ -27,7 +29,7 @@ public class ExtractReplace {
     }
     public void setExtractReplaceMethod(Replace replace, TransformTypes type, String typeArgs[]) {
         if(this.getType().equals(TransformTypes.JAVASCRIPT) || this.getType().equals(TransformTypes.PYTHON)){
-            this.extractReplaceMethod = new ExtractReplaceScript(replace, typeArgs[0]);
+            this.extractReplaceMethod = new ExtractReplaceScript(replace, typeArgs[0], this.getType());
         }else if(this.getType().equals(TransformTypes.REGEX)){
             this.extractReplaceMethod = new ExtractReplaceRegex(replace, typeArgs[0]);
         }else if(this.getType().equals(TransformTypes.STARTEND)){
@@ -45,7 +47,7 @@ public class ExtractReplace {
         return this.type.text();
     }
     public void setTypeString(String type) {
-        this.type = TransformTypes.valueOf(type);
+        this.type = TransformTypes.fromText(type);
     }
 
     public String getId() {

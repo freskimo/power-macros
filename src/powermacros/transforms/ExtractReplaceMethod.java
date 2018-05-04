@@ -8,6 +8,8 @@ public abstract class ExtractReplaceMethod {
     protected Extraction extraction;
     protected Replace replace;
     protected TransformTypes type;
+    protected String typeArgs;
+
 
     public ExtractReplaceMethod(Extraction extraction){
         this.type = extraction.getType();
@@ -19,7 +21,13 @@ public abstract class ExtractReplaceMethod {
     }
 
     public abstract String getReplacedExtraction(String requestResponse);
-    public abstract String getExtractionArgument();
+    public String getExtractionArgument(){
+         return this.typeArgs;
+    }
+    public void setExtractionArgument(String typeArgs){
+        this.typeArgs = typeArgs;
+    }
+
     public String doReplace(){
         return "";
     }

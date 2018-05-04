@@ -48,14 +48,14 @@ public class ExtractManager {
 
         ExtractManager.getExtModelMap().remove(removeExtractId);
     }
-    public static void addExtraction(Extraction ext) {
-        if(!getExtModelMap().containsKey(ext.getId())){
+    public static void put(Extraction ext) {
+//        if(!getExtModelMap().containsKey(ext.getId())){
             extModelMap.put(ext.getId(), ext);
-        }
+//        }
     }
     public static void addExtractions(Extraction extList[]){
         for (Extraction ext: extList) {
-            addExtraction(ext);
+            put(ext);
         }
     }
     public static Extraction getExtractionById(String id) {

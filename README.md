@@ -1,7 +1,6 @@
 # PowerMacros
 PowerMacros is plug-in for BurpSuite proxy. It provides similar but extended functionality of BurpSuite Macro feature. The main functionality is, that you are able to trigger one or more request before every request triggered from Intruder, Repeater, Scanner, Sequencer or Spider (except tools Proxy and Extender). You can extract data from arbitrary response of the request and replace or add data to the following request (replace CSRF token, session, add new header ...).
 
-It is still in development, so please don't be angry if something getting wrong, rather let me know to fix it ;).
 
 ## Features
 - create sequence of the request to be triggered before the every request call
@@ -71,12 +70,3 @@ Video https://www.youtube.com/watch?v=IwKa0F7MmTM
 
 [![PowerMacros usage](http://img.youtube.com/vi/IwKa0F7MmTM/0.jpg)](https://www.youtube.com/watch?v=IwKa0F7MmTM)
 
-# Contribution
-Feel free to create pull request or issues.
-
-# Donation
-Thank you very much and enjoy :).
-
-| PayPal | Bitcoin |
-| ------ | ------- |
-| [![](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=P6JB98K7TNJNG&lc=SK&item_number=PowerMacros&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted) |  <center> ![19YoCcuruuovPFxDVfVWLVSBqhdPeUHtb5](/images/donation-bitcoin.png)<br />19YoCcuruuovPFxDVfVWLVSBqhdPeUHtb5</center> |

@@ -1,6 +1,5 @@
 package powermacros.forms;
 
-import burp.BurpExtender;
 import powermacros.extract.ExtractManager;
 import powermacros.extract.Extraction;
 import powermacros.transforms.TransformTypes;
@@ -137,7 +136,7 @@ public class AddExtraction extends JDialog {
         }
         String typeArgs[] = {arg};
         Extraction newExtraction = new Extraction(txtName.getText(), cboType.getSelectedItem().toString(), typeArgs);
-        ExtractManager.addExtraction(newExtraction);
+        ExtractManager.put(newExtraction);
         dispose();
     }
 

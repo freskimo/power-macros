@@ -4,51 +4,81 @@ import burp.*;
 import powermacros.extract.Extraction;
 import powermacros.replace.Replace;
 
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
+import javax.script.*;
+import javax.xml.crypto.dsig.Transform;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.security.GeneralSecurityException;
 import java.util.List;
 
 public class ExtractReplaceScript extends ExtractReplaceMethod {
-    protected String scriptPath;
+    private String scriptLanguage;
 
-    public ExtractReplaceScript(Extraction extraction, String scriptPath){
+    public ExtractReplaceScript(Extraction extraction, String scriptPath, TransformTypes type){
         super(extraction);
-        this.scriptPath = scriptPath;
+        this.typeArgs = scriptPath;
+        this.scriptLanguage = type.text();
     }
 
-    @Override
+    public ExtractReplaceScript(Replace replace, String scriptPath, TransformTypes type){
+        super(replace);
+        this.typeArgs = scriptPath;
+        this.scriptLanguage = type.text();
+    }
+
+
 
     //Script takes the request/response string as input to its function
     //Script can dynamically decide what the extraction regex should be
     //    based on the request/response details.
+//    public void findEngines(){
+//        ScriptEngineManager mgr = new ScriptEngineManager();
+//        List<ScriptEngineFactory> factories = mgr.getEngineFactories();
+//        for (ScriptEngineFactory factory : factories)
+//        {
+//            BurpExtender.println("ScriptEngineFactory Info");
+//            String engName = factory.getEngineName();
+//            String engVersion = factory.getEngineVersion();
+//            String langName = factory.getLanguageName();
+//            String langVersion = factory.getLanguageVersion();
+//            BurpExtender.println("\tScript Engine: + " + engName + " " + engVersion);
+//            List<String> engNames = factory.getNames();
+//            for (String name : engNames)
+//            {
+//                BurpExtender.println("\tEngine Alias: " + name);
+//            }
+//            BurpExtender.println("\tLanguage: " + langName + " " + langVersion);
+//        }
+//    }
+    @Override
     public String getReplacedExtraction(String requestResponse)  {
         ScriptEngineManager factory = new ScriptEngineManager();
         // escape all the single quotes or do other required modifications to the body
+        BurpExtender.println(this.scriptLanguage);
+        ScriptEngine engine = factory.getEngineByName(this.scriptLanguage);
+//        ScriptContext context = new SimpleScriptContext();
 
-        ScriptEngine engine = factory.getEngineByName("JavaScript");
+        BurpExtender.println("Set the script language successfully");
         // set the RequestBody for the javascript functionality
-        engine.put("requestBody",requestResponse);
+//        engine.put("requestBody",requestResponse);
         // execute the js
+
+        BurpExtender.println("Attempting replace");
         try{ //TODO
-            engine.eval(new java.io.FileReader(this.scriptPath));
+            BurpExtender.println("Attempting read: " + this.typeArgs);
+            engine.eval(new java.io.FileReader(this.typeArgs)); //, context);
         }catch(Exception e){
-            BurpExtender.getInstance().stdout.println("getReplacedExtraction SCRIPT FAILURE: " + e.getMessage());
+            BurpExtender.println("getReplacedExtraction SCRIPT FAILURE: " + e.getMessage());
         }
+        BurpExtender.println("Finish replace");
 
         // read the result variable from the js
         Object res = engine.get("result");
+        BurpExtender.println("The replacement: " + res.toString());
         // and return it
         return res.toString();
-    }
-
-    public ExtractReplaceScript(Replace replace, String scriptPath){
-        super(replace);
-        this.scriptPath = scriptPath;
     }
 
     public void PostProcessAction(IHttpRequestResponse currentRequest, IHttpRequestResponse[] macroItems) {
@@ -104,8 +134,4 @@ public class ExtractReplaceScript extends ExtractReplaceMethod {
         return res.toString();
     }
 
-    @Override
-    public String getExtractionArgument() {
-        return scriptPath;
-    }
 }
