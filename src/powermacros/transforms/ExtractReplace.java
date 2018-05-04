@@ -13,11 +13,11 @@ public class ExtractReplace {
 
     }
 
-
     public ExtractReplace(String name, TransformTypes type){
         this.id = name;
         this.setType(type);
     }
+
     public void setExtractReplaceMethod(Extraction extraction, TransformTypes type, String typeArgs[]) {
         if(this.getType().equals(TransformTypes.JAVASCRIPT) || this.getType().equals(TransformTypes.PYTHON)){
             this.extractReplaceMethod = new ExtractReplaceScript(extraction, typeArgs[0], this.getType());

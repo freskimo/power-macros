@@ -19,10 +19,4 @@ public class Extraction extends ExtractReplace {
     public String getExtractionString(String request) {
         return this.getExtractReplaceMethod().getReplacedExtraction(request);
     }
-
-    @Override
-    public String toString() {
-        return "extract TOSTRING";
-    }
-
 }

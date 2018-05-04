@@ -35,15 +35,9 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
     private static String VERSION = "0.0.1";
     public static final String HOST_FROM = "www.example.com";
 
-//    private BurpActionModel burpActionModel = new BurpActionModel();
-
     public IBurpExtenderCallbacks getCallbacks() {
         return callbacks;
     }
-    public void setCallbacks(IBurpExtenderCallbacks callbacks) {
-        this.callbacks = callbacks;
-    }
-
     public IBurpExtenderCallbacks callbacks;
     public IExtensionHelpers helpers;
     private Set<String> actualCallRepSet; /// what to replace in last call
@@ -67,6 +61,7 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
     private JButton editExtractionButton;
     private JButton saveSettingsButton;
     private JButton loadSettingsButton;
+    private JPanel tabSettingsConfig;
 
     private DebugUtilities debugUtilities;
     private long lastExtractionTime = 0L;
@@ -86,13 +81,12 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
                 }
             });
             INSTANCE = this;
-
-//            debugUtilities = new DebugUtilities(this);
             mainExtractTableModel = new MainExtractTableModel();
             replaceTableModel = new MainReplaceTableModel();
 
             extractTable.setModel(mainExtractTableModel);
             replaceTable.setModel(replaceTableModel);
+            tabbedPane1.remove(tabSettingsConfig);
         }
         editReplacementButton.addActionListener(new ActionListener() {
             @Override
@@ -109,11 +103,8 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
             @Override
             public void actionPerformed(ActionEvent e) {
                 Extraction extractEdit = ExtractManager.getExtraction(extractTable.getSelectedRow());
-
                 AddExtraction addExtractForm = new AddExtraction(extractEdit);
-
                 addExtractForm.setTitle("Edit extraction...");
-                //https://stackoverflow.com/questions/12988896/jframe-fixed-width
                 addExtractForm.setSize(new Dimension (400, 210));
                 addExtractForm.setResizable(false);
                 addExtractForm.setVisible(true);
@@ -198,20 +189,6 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
     @Override
     public void processHttpMessage(int toolFlag, boolean messageIsRequest, IHttpRequestResponse messageInfo) {
 
-        //        if (messageIsRequest) {
-//
-//            for (Replace r: this.getReplacementModel().getReplaces()) {
-//                String newRequest = new String(messageInfo.getRequest());
-//                newRequest = r.replaceData(newRequest, helpers);
-//                messageInfo.setRequest(newRequest.getBytes());
-//
-//                IHttpRequestResponse newMsgInfo = callbacks.makeHttpRequest(
-//                        messageInfo.getHttpService(), newRequest.getBytes());
-//
-//                stdout.print(newRequest);
-//
-//            }
-//        }
     }
     private void onAddReplacement(){
 
@@ -237,7 +214,6 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
 
     //    private MessagesModel loggerMessagesModel;
     public static void main(String[] args) {
-
         frame = new JFrame("BurpExtender");
         frame.setContentPane(new BurpExtender().panel1);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -245,34 +221,9 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
         frame.setVisible(true);
 
     }
-
-    private void initGui() {
-
-//        debugUtilities = new DebugUtilities(this);
-
-    }
-    /**
-     * Check whether it is possible to create extraction point.
-     * @return
-     */
-    public boolean isValidExtraction() {
-        return false;
-    }
-
     @Override
     public java.util.List<JMenuItem> createMenuItems(IContextMenuInvocation invocation) {
         IHttpRequestResponse[] messages = invocation.getSelectedMessages();
-//        stdout.println("[*] processing menu");
-//
-//        if (messages.length > 0) {
-//            List<JMenuItem> menu = new LinkedList<>();
-//            JMenuItem sendTo = new JMenuItem("Send to " + EXTENSION_NAME);
-//            sendTo.addActionListener(new MenuListener(this, messages, MenuActions.A_SEND_TO_EM, getExtMessagesTable()));
-//
-//            menu.add(sendTo);
-//
-//            return menu;
-//        }
         return null;
     }
     @Override
@@ -289,9 +240,6 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
 
         callbacks.setExtensionName(EXTENSION_NAME);
 
-
-        initGui();
-
         // register callbacks
         callbacks.registerHttpListener(this);
         callbacks.registerContextMenuFactory(this);
@@ -301,7 +249,6 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
         stdout.println("[*] " + EXTENSION_NAME + " " + VERSION);
         stdout.println("Starting debug utilities");
         debugUtilities = new DebugUtilities(this);
-//        dbgTable();
     }
 
     @Override
@@ -312,12 +259,4 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
     public Component getUiComponent() {
         return tabbedPane1;
     }
-
-    public MainExtractTableModel getExtractionModel() {
-        return mainExtractTableModel;
-    }
-    public MainReplaceTableModel getReplacementModel() {
-        return replaceTableModel;
-    }
-
 }

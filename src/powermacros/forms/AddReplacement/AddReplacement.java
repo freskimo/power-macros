@@ -73,7 +73,6 @@ public class AddReplacement extends JDialog {
         getRootPane().setDefaultButton(buttonOK);
         addReplacementTypesToCombo();
 
-
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onOK();

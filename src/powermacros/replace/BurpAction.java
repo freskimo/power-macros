@@ -50,7 +50,6 @@ public class BurpAction implements ISessionHandlingAction {
      */
     @Override
     public void performAction(IHttpRequestResponse currentRequest, IHttpRequestResponse[] macroItems) {
-
         String reqBody = replacement.replaceData(currentRequest);
         BurpExtender.getInstance().stdout.println("<<FINAL REQUEST:>>");
         BurpExtender.getInstance().stdout.println(reqBody);

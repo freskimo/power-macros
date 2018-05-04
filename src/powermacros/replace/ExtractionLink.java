@@ -18,7 +18,6 @@ public class ExtractionLink {
     public Map<String, Extraction> getLinkedExtractMap() {
         return linkedExtracts;
     }
-
     public ArrayList<Extraction> getLinkedExtractList() {
         ArrayList<Extraction> rtnList = new ArrayList<>();
         rtnList.addAll(getLinkedExtractMap().values());

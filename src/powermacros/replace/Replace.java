@@ -1,17 +1,9 @@
 package powermacros.replace;
-
-import burp.BurpExtender;
-import burp.IExtensionHelpers;
 import burp.IHttpRequestResponse;
 import powermacros.transforms.TransformTypes;
 import powermacros.transforms.ExtractReplace;
 import powermacros.extract.Extraction;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 /**
  * Created by fruh on 9/7/16.
  */

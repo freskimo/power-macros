@@ -28,29 +28,6 @@ public class ExtractReplaceScript extends ExtractReplaceMethod {
         this.scriptLanguage = type.text();
     }
 
-
-    //Script takes the request/response string as input to its function
-    //Script can dynamically decide what the extraction regex should be
-    //    based on the request/response details.
-//    public void findEngines(){
-//        ScriptEngineManager mgr = new ScriptEngineManager();
-//        List<ScriptEngineFactory> factories = mgr.getEngineFactories();
-//        for (ScriptEngineFactory factory : factories)
-//        {
-//            BurpExtender.println("ScriptEngineFactory Info");
-//            String engName = factory.getEngineName();
-//            String engVersion = factory.getEngineVersion();
-//            String langName = factory.getLanguageName();
-//            String langVersion = factory.getLanguageVersion();
-//            BurpExtender.println("\tScript Engine: + " + engName + " " + engVersion);
-//            List<String> engNames = factory.getNames();
-//            for (String name : engNames)
-//            {
-//                BurpExtender.println("\tEngine Alias: " + name);
-//            }
-//            BurpExtender.println("\tLanguage: " + langName + " " + langVersion);
-//        }
-//    }
     @Override
     public String getReplacedExtraction(String requestResponse) {
         ScriptEngineManager factory = new ScriptEngineManager();
