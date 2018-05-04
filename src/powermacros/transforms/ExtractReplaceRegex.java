@@ -5,11 +5,12 @@ import powermacros.replace.Replace;
 
 public class ExtractReplaceRegex extends ExtractReplaceMethod {
 
-    public ExtractReplaceRegex(Extraction extraction, String regexStr){
+    public ExtractReplaceRegex(Extraction extraction, String regexStr) {
         super(extraction);
         this.typeArgs = regexStr;
     }
-    public ExtractReplaceRegex(Replace replace, String regexStr){
+
+    public ExtractReplaceRegex(Replace replace, String regexStr) {
         super(replace);
         this.typeArgs = regexStr;
     }
@@ -18,9 +19,5 @@ public class ExtractReplaceRegex extends ExtractReplaceMethod {
     public String getReplacedExtraction(String requestResponse) {
         return this.typeArgs;
     }
-
-
-
-
 
 }

@@ -21,14 +21,15 @@ public class Replace extends ExtractReplace {
 
     BurpAction burpAction;
 
-    public Replace(){ }
+    public Replace() {
+    }
 
     public void addLinkedExtraction(Extraction ext) {
         this.linkedExtracts.add(ext);
     }
 
-    public void addLinkedExtractions(List<Extraction> extList){
-        for (Extraction ext: extList) {
+    public void addLinkedExtractions(List<Extraction> extList) {
+        for (Extraction ext : extList) {
             this.addLinkedExtraction(ext);
         }
     }
@@ -47,13 +48,15 @@ public class Replace extends ExtractReplace {
     }
 
     @Override
-    public String toString() { return ""; }
+    public String toString() {
+        return "";
+    }
 
     public String replaceData(IHttpRequestResponse request) {
         String strRequest = new String(request.getRequest());
-        for (Extraction extraction: this.linkedExtracts.getLinkedExtractMap().values()) {
-               strRequest = strRequest.replace(extraction.getExtractionString(strRequest),
-                       this.getExtractReplaceMethod().getReplacedExtraction(strRequest));
+        for (Extraction extraction : this.linkedExtracts.getLinkedExtractMap().values()) {
+            strRequest = strRequest.replace(extraction.getExtractionString(strRequest),
+                    this.getExtractReplaceMethod().getReplacedExtraction(strRequest));
         }
         return strRequest;
     }
@@ -61,6 +64,9 @@ public class Replace extends ExtractReplace {
     public boolean isUrlDecode() {
         return urlDecode;
     }
-    public void setUrlDecode(boolean urlDecode) { this.urlDecode = urlDecode; }
+
+    public void setUrlDecode(boolean urlDecode) {
+        this.urlDecode = urlDecode;
+    }
 
 }

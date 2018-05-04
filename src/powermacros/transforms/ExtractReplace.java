@@ -23,8 +23,6 @@ public class ExtractReplace {
             this.extractReplaceMethod = new ExtractReplaceScript(extraction, typeArgs[0], this.getType());
         }else if(this.getType().equals(TransformTypes.REGEX)){
             this.extractReplaceMethod = new ExtractReplaceRegex(extraction, typeArgs[0]);
-        }else if(this.getType().equals(TransformTypes.STARTEND)){
-            this.extractReplaceMethod = new ExtractReplaceStartStop(extraction, typeArgs[1], typeArgs[2]);
         }
     }
     public void setExtractReplaceMethod(Replace replace, TransformTypes type, String typeArgs[]) {
@@ -32,8 +30,6 @@ public class ExtractReplace {
             this.extractReplaceMethod = new ExtractReplaceScript(replace, typeArgs[0], this.getType());
         }else if(this.getType().equals(TransformTypes.REGEX)){
             this.extractReplaceMethod = new ExtractReplaceRegex(replace, typeArgs[0]);
-        }else if(this.getType().equals(TransformTypes.STARTEND)){
-            this.extractReplaceMethod = new ExtractReplaceStartStop(replace, typeArgs[1], typeArgs[2]);
         }
     }
 

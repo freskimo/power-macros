@@ -16,18 +16,17 @@ import java.util.List;
 public class ExtractReplaceScript extends ExtractReplaceMethod {
     private String scriptLanguage;
 
-    public ExtractReplaceScript(Extraction extraction, String scriptPath, TransformTypes type){
+    public ExtractReplaceScript(Extraction extraction, String scriptPath, TransformTypes type) {
         super(extraction);
         this.typeArgs = scriptPath;
         this.scriptLanguage = type.text();
     }
 
-    public ExtractReplaceScript(Replace replace, String scriptPath, TransformTypes type){
+    public ExtractReplaceScript(Replace replace, String scriptPath, TransformTypes type) {
         super(replace);
         this.typeArgs = scriptPath;
         this.scriptLanguage = type.text();
     }
-
 
 
     //Script takes the request/response string as input to its function
@@ -53,7 +52,7 @@ public class ExtractReplaceScript extends ExtractReplaceMethod {
 //        }
 //    }
     @Override
-    public String getReplacedExtraction(String requestResponse)  {
+    public String getReplacedExtraction(String requestResponse) {
         ScriptEngineManager factory = new ScriptEngineManager();
         // escape all the single quotes or do other required modifications to the body
         BurpExtender.println(this.scriptLanguage);
@@ -66,10 +65,10 @@ public class ExtractReplaceScript extends ExtractReplaceMethod {
         // execute the js
 
         BurpExtender.println("Attempting replace");
-        try{ //TODO
+        try { //TODO
             BurpExtender.println("Attempting read: " + this.typeArgs);
             engine.eval(new java.io.FileReader(this.typeArgs)); //, context);
-        }catch(Exception e){
+        } catch (Exception e) {
             BurpExtender.println("getReplacedExtraction SCRIPT FAILURE: " + e.getMessage());
         }
         BurpExtender.println("Finish replace");
@@ -86,10 +85,10 @@ public class ExtractReplaceScript extends ExtractReplaceMethod {
         IHttpService httpService = currentRequest.getHttpService();
 
         // get the URL of the request
-        URL url= BurpExtender.getInstance().helpers.analyzeRequest(currentRequest).getUrl();
+        URL url = BurpExtender.getInstance().helpers.analyzeRequest(currentRequest).getUrl();
 
         // if the target host is the right one and the url is not e.g login
-        if (BurpExtender.HOST_FROM.equalsIgnoreCase(httpService.getHost()) && !url.getPath().equalsIgnoreCase("/login")){ //TODO: remove login?
+        if (BurpExtender.HOST_FROM.equalsIgnoreCase(httpService.getHost()) && !url.getPath().equalsIgnoreCase("/login")) { //TODO: remove login?
             // get the request info
             IRequestInfo rqInfo = BurpExtender.getInstance().helpers.analyzeRequest(currentRequest);
             // retrieve all headers
@@ -101,11 +100,13 @@ public class ExtractReplaceScript extends ExtractReplaceMethod {
             String signature = null;
             try {
                 signature = PostProcessSignBody(messageBody);
-            } catch (Exception e) { BurpExtender.getInstance().stdout.println(e.toString()); }
+            } catch (Exception e) {
+                BurpExtender.getInstance().stdout.println(e.toString());
+            }
 
             // go through the header and look for the one that we want to replace
-            for (int i = 0; i < headers.size();i++){
-                if(headers.get(i).startsWith("Signature-Header:"))
+            for (int i = 0; i < headers.size(); i++) {
+                if (headers.get(i).startsWith("Signature-Header:"))
                     headers.set(i, "Signature-Header: " + signature);
             }
 
@@ -118,14 +119,15 @@ public class ExtractReplaceScript extends ExtractReplaceMethod {
             currentRequest.setRequest(message);
         }
     }
+
     public String PostProcessSignBody(String requestbody) throws GeneralSecurityException, FileNotFoundException, IOException, ScriptException {
         ScriptEngineManager factory = new ScriptEngineManager();
         // escape all the single quotes or do other required modifications to the body
-        String bodyRequest = requestbody.replace("'","\'");
+        String bodyRequest = requestbody.replace("'", "\'");
 
         ScriptEngine engine = factory.getEngineByName("JavaScript");
         // set the RequestBody for the javascript functionality
-        engine.put("requestBody",bodyRequest);
+        engine.put("requestBody", bodyRequest);
         // execute the js
         engine.eval(new java.io.FileReader("/path/to/sign.js"));
         // read the result variable from the js

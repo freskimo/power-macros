@@ -25,7 +25,7 @@ public class ReplaceManager {
         return rtnList;
     }
 
-    public static void save(BufferedWriter writer){
+    public static void save(BufferedWriter writer) {
 
     }
 
@@ -35,7 +35,7 @@ public class ReplaceManager {
 
 
     public static void removeReplace(int i) {
-        if(i >= 0){
+        if (i >= 0) {
             ArrayList<Replace> tempReplace = ReplaceManager.getReplacementList();
             String removeReplaceId = tempReplace.get(i).getId();
             ReplaceManager.getRepModelMap().remove(removeReplaceId);
@@ -55,6 +55,7 @@ public class ReplaceManager {
         }
         return null;
     }
+
     public static Replace getReplaceById(String id) {
         return getRepModelMap().get(id);
     }

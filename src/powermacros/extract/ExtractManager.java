@@ -19,11 +19,10 @@ public class ExtractManager {
     public static Map<String, Extraction> getExtModelMap() {
         return extModelMap;
     }
+
     public static void setExtModelMap(Map<String, Extraction> extModelMap) {
         ExtractManager.extModelMap = extModelMap;
     }
-
-
 
     public static Extraction getExtraction(int i) {
         ArrayList<Extraction> extractions = getExtractionList();
@@ -32,8 +31,9 @@ public class ExtractManager {
         }
         return null;
     }
+
     public static void removeExtraction(int i) {
-        if(i == -1){
+        if (i == -1) {
             return;
         }
 
@@ -41,23 +41,24 @@ public class ExtractManager {
         String removeExtractId = tempExtracts.get(i).getId();
 
         //Remove any linked extractions for the selected removal
-        for(Replace r: ReplaceManager.getReplacementList()){
+        for (Replace r : ReplaceManager.getReplacementList()) {
             r.linkedExtracts.remove(removeExtractId);
         }
 
 
         ExtractManager.getExtModelMap().remove(removeExtractId);
     }
+
     public static void put(Extraction ext) {
-//        if(!getExtModelMap().containsKey(ext.getId())){
-            extModelMap.put(ext.getId(), ext);
-//        }
+        extModelMap.put(ext.getId(), ext);
     }
-    public static void addExtractions(Extraction extList[]){
-        for (Extraction ext: extList) {
+
+    public static void addExtractions(Extraction extList[]) {
+        for (Extraction ext : extList) {
             put(ext);
         }
     }
+
     public static Extraction getExtractionById(String id) {
         return getExtModelMap().get(id);
     }

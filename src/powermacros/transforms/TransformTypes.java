@@ -1,10 +1,10 @@
 package powermacros.transforms;
+
 public enum TransformTypes {
     STARTEND("Start/end string"),
     REGEX("Regex"),
     PYTHON("python"),
     JAVASCRIPT("JavaScript");
-
 
     private String type;
 
@@ -18,7 +18,7 @@ public enum TransformTypes {
 
     public boolean isImplemented() {
         if (this.equals(REGEX) ||
-                this.equals(JAVASCRIPT)){
+                this.equals(JAVASCRIPT)) {
             return true;
         } else {
             return false;
@@ -26,8 +26,8 @@ public enum TransformTypes {
     }
 
     public static TransformTypes fromText(String text) {
-        for(TransformTypes t: TransformTypes.values()){
-            if(t.text().equals(text)){
+        for (TransformTypes t : TransformTypes.values()) {
+            if (t.text().equals(text)) {
                 return t;
             }
         }

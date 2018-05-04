@@ -27,7 +27,6 @@ public class LinkedExtractsTableModel extends AbstractTableModel {
         this.extractions = linkedReplacement.linkedExtracts.getLinkedExtractList();
     }
 
-
     @Override
     public int getRowCount() {
         return this.extractions.size();
@@ -53,12 +52,6 @@ public class LinkedExtractsTableModel extends AbstractTableModel {
         return null;
     }
 
-//    public Extraction getExtractionById(String id) {
-//        return mapAllExtracts.get(id);
-//    }
-
-
-
     @Override
     public Object getValueAt(int row, int col) {
         String ret;
@@ -80,11 +73,6 @@ public class LinkedExtractsTableModel extends AbstractTableModel {
         return ret;
     }
 
-//    public void remove(String id) {
-//        int row = getRowById(id);
-//        removeRow(row);
-//    }
-//
     public void removeRow(int row) {
         extractions.remove(row);
         fireTableRowsDeleted(row, row);
@@ -124,16 +112,8 @@ public class LinkedExtractsTableModel extends AbstractTableModel {
 
     public String replaceExtractions(String request, IExtensionHelpers helpers) {
         for (Extraction extraction: this.extractions) {
-//            BurpExtender.getInstance().stdout.println("\nExtraction type: " + extraction.getTypeString());
-
-//            if (extraction.getTypeString().equals(TransformTypes.REGEX.text())) {
-//                BurpExtender.getInstance().stdout.println("Extraction string: " + extraction.getReplacedExtraction(request));
-//                BurpExtender.getInstance().stdout.println("Replacement string: " + this.linkedReplacement.getExtractReplaceMethod().getReplacedExtraction(request));
-//                BurpExtender.getInstance().stdout.println("-------------------------------\n");
             request = request.replace(extraction.getExtractionString(request),
                     this.linkedReplacement.getExtractReplaceMethod().getReplacedExtraction(request));
-
-//            }
         }
 
         return request;
