@@ -1,6 +1,7 @@
 # PowerMacros
 PowerMacros is plug-in for BurpSuite proxy. It provides similar but extended functionality of BurpSuite Macro feature. The main functionality is, that you are able to trigger one or more request before every request triggered from Intruder, Repeater, Scanner, Sequencer or Spider (except tools Proxy and Extender). You can extract data from arbitrary response of the request and replace or add data to the following request (replace CSRF token, session, add new header ...).
 
+Integrates powerfully with Burp Suite's features, in particular its target scoping functionality. 
 
 ## Features
 - create sequence of the request to be triggered before the every request call
@@ -54,17 +55,17 @@ He you can specifies what tool will use the PowerMacros plug-in.
 
 ## Screen-shots
 
-Main
+Advanced URL Scoping Functionality. When the "in scope" URL conditions are met, user-specified string manipulation of outgoing requests will be triggered.
 
-![Main tab](/screenshot/main.png?raw=true "Main tab")
+![Main tab](/screenshots/0_session_handling_rule_3_advanced.png?raw=true "Main tab")
 
 Logger
 
-![Logger tab](/screenshot/logger.png?raw=true "Logger tab")
+![Logger tab](/screenshots/0_main_extract_example.png?raw=true "Logger tab")
 
 Settings
 
-![Settings tab](/screenshot/settings.png?raw=true "Settings tab")
+![Settings tab](/screenshots/0_main_replace_example.png?raw=true "Settings tab")
 
 Video https://www.youtube.com/watch?v=IwKa0F7MmTM
 
