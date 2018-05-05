@@ -65,7 +65,3 @@ Main: Example Extractions
 Main: Example Replacements
 
 ![Settings tab](/screenshots/0_main_replace_example.png?raw=true "Settings tab")
-
-
-## Coming Soon
--Python support
