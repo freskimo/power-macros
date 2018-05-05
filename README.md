@@ -30,11 +30,11 @@ Extraction Configuration:
 2. For this simple tutorial, set the extraction type to Regex and enter a Regex pattern that will be searched for in automated requests. (Advanced extraction: you can load a JavaScript file to perform dynamic extraction instead of a static Regex pattern)
 
 Replacement Configuration:
-3. In the "Replace" tab, click "Add replacement". 
-4. Set the replacement type to "JavaScript" and load the script file you will use to perform dynamic replacement.
-5. Before you click save, you must link your extraction to this replacement. You'll see that you can add linked extractions in the bottom half of that window.
+1. In the "Replace" tab, click "Add replacement". 
+2. Set the replacement type to "JavaScript" and load the script file you will use to perform dynamic replacement.
+3. Before you click save, you must link your extraction to this replacement. You'll see that you can add linked extractions in the bottom half of that window.
 
-#### Linking the Replacement with BurpSuite
+### Linking the Replacement with BurpSuite
 1. Click the "Project Options". Within that tab, click the inner "Sessions" tab.
 2. In the "Session Handling Rules" section, click "Add". A new window should pop up.
 3. In the scope tab, you can set up advanced matching Regex conditions of URLs, IPs, ports, and file names.
@@ -42,16 +42,16 @@ Replacement Configuration:
 4. Select the replacement you set up and click "Ok".
 
 
-## Screen-shots
+## Screenshots
 
 Advanced URL Scoping Functionality. When the "in scope" URL conditions are met, user-specified string manipulation of outgoing requests will be triggered.
 
-![Main tab](/screenshots/0_session_handling_rule_3_advanced.png?raw=true "Main tab")
+![Session handling rules](/screenshots/0_session_handling_rule_3_advanced.png?raw=true "Main tab")
 
 Main: Example Extractions
 
-![Logger tab](/screenshots/0_main_extract_example.png?raw=true "Logger tab")
+![Extract tab](/screenshots/0_main_extract_example.png?raw=true "Logger tab")
 
 Main: Example Replacements
 
-![Settings tab](/screenshots/0_main_replace_example.png?raw=true "Settings tab")
+![Replace tab](/screenshots/0_main_replace_example.png?raw=true "Settings tab")
