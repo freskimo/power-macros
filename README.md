@@ -17,16 +17,6 @@ Incorporating JavaScript files allow for fine-tuning of automated requests. Ther
 - Able to perform string modification in automated request arbitrary strings in the request. 
 - ability to add new header into the request
 
-## About the UI
-The plug-in adds new tab into the BurpSuite named "PowerMacros". Within the "PowerMacros" tab are two tabs: "Extract" and "Replace".
-
-
-#### Extract Tab
-Here you can set up what requests will be triggered and what data will be extracted from their responses. After selecting the message, you can set the extraction by the selection of the response.
-
-#### Replace Tab
-Here you can set up what data from extraction will be added/replaced in the following requests. The replace string can be set by the selection of the request.
-
 ## How to
 ### Installation of PowerMacros
 1. Download Burp Suite at: https://portswigger.net/burp
