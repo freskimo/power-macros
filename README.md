@@ -2,29 +2,20 @@
 PowerMacros is plug-in for BurpSuite proxy. It provides extended functionality of BurpSuite's built-in macros feature. This extension allows you to pipe automated requests (when certain conditions are met) to JavaScript files for pre-processing before being sent outbound. With JavaScript files you load, you can manipulate Burp Suite's automated requests on the fly. PowerMacros integrates powerfully with Burp Suite's features, in particular its target scoping functionality. 
 
 ## Examples of Practical Uses
-These are just a few examples of PowerMacros capabilities. There are many ways this tool can be used:
+Incorporating script files allows you There are many ways this tool can be used. These are just a few examples of PowerMacros capabilities:
 - CSRF token replacement
-- Session token replacement
-- Adding new headers
+- Session token replacement.
+- Tailoring an XSS string to the automated request.
 
 ## Features
-- create sequence of the request to be triggered before the every request call
-- extract data from arbitrary response
-- paste extracted data into arbitrary following request
-  - replacement of the existing data
-  - add new HTTP header
-  - replacement of the HTTP header
-- create new header
-- changing order of the requests
-- URL decoding of extracted data
-- extracted data caching
-	- you can specify time interval, when the extraction will be performed
-
-## Advantages against the BurpSuite Macro
-- ability to replace arbitrary string in the request
+- Adding new headers
+- Modifying existing headers
+- Extracting data from arbitrary response
+- Modification of automated outbound request
+  
+## Advantages over BurpSuite's built-in macros
+- Able to perform string modification in automated request arbitrary strings in the request. 
 - ability to add new header into the request
-- easier configuration than macro (does not seems to be, but it is ;))
-- extracted data caching
 
 ## About the UI
 The plug-in adds new tab into the BurpSuite named "PowerMacros". Within the "PowerMacros" tab are two tabs: "Extract" and "Replace".
