@@ -59,15 +59,14 @@ Advanced URL Scoping Functionality. When the "in scope" URL conditions are met, 
 
 ![Main tab](/screenshots/0_session_handling_rule_3_advanced.png?raw=true "Main tab")
 
-Logger
+Main: Example Extractions
 
 ![Logger tab](/screenshots/0_main_extract_example.png?raw=true "Logger tab")
 
-Settings
+Main: Example Replacements
 
 ![Settings tab](/screenshots/0_main_replace_example.png?raw=true "Settings tab")
 
-Video https://www.youtube.com/watch?v=IwKa0F7MmTM
 
-[![PowerMacros usage](http://img.youtube.com/vi/IwKa0F7MmTM/0.jpg)](https://www.youtube.com/watch?v=IwKa0F7MmTM)
-
+## Coming Soon
+-Python support
