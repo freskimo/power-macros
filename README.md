@@ -1,7 +1,11 @@
 # PowerMacros
-PowerMacros is plug-in for BurpSuite proxy. It provides similar but extended functionality of BurpSuite Macro feature. The main functionality is, that you are able to trigger one or more request before every request triggered from Intruder, Repeater, Scanner, Sequencer or Spider (except tools Proxy and Extender). You can extract data from arbitrary response of the request and replace or add data to the following request (replace CSRF token, session, add new header ...).
+PowerMacros is plug-in for BurpSuite proxy. It provides extended functionality of BurpSuite's built-in macros feature. This extension allows you to pipe automated requests (when certain conditions are met) to JavaScript files for pre-processing before being sent outbound. With JavaScript files you load, you can manipulate Burp Suite's automated requests on the fly. PowerMacros integrates powerfully with Burp Suite's features, in particular its target scoping functionality. 
 
-Integrates powerfully with Burp Suite's features, in particular its target scoping functionality. 
+## Examples of Practical Uses
+These are just a few examples of PowerMacros capabilities. There are many ways this tool can be used:
+- CSRF token replacement
+- Session token replacement
+- Adding new headers
 
 ## Features
 - create sequence of the request to be triggered before the every request call
@@ -23,19 +27,14 @@ Integrates powerfully with Burp Suite's features, in particular its target scopi
 - extracted data caching
 
 ## About the UI
-The plug-in adds new tab into the BurpSuite named "PowerMacros". It contains several tabs: "Main", "Logger" and "Settings".
+The plug-in adds new tab into the BurpSuite named "PowerMacros". Within the "PowerMacros" tab are two tabs: "Extract" and "Replace".
 
-### Main
-In the main window you are able to configure all the magic. The left part of the view is the "Extraction message list" and the right part is the "Replace message list".
 
-#### Extraction message list
+#### Extract Tab
 Here you can set up what requests will be triggered and what data will be extracted from their responses. After selecting the message, you can set the extraction by the selection of the response.
 
-#### Replace message list
+#### Replace Tab
 Here you can set up what data from extraction will be added/replaced in the following requests. The replace string can be set by the selection of the request.
-
-### Logger
-Logs all messaged what were modified or triggered by PowerMacros.
 
 ### Settings
 He you can specifies what tool will use the PowerMacros plug-in.
