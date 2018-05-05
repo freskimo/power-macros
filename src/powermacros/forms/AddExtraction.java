@@ -20,8 +20,13 @@ public class AddExtraction extends JDialog {
     private JButton btnPath;
 
     private Extraction extractToEdit;
+
+    private boolean isEdit = false;
+    private String oldExtractionName;
     public AddExtraction(Extraction extractToEdit){
         this();
+        this.isEdit = true;
+        this.oldExtractionName = extractToEdit.getId();
         this.extractToEdit = extractToEdit;
         this.setupEditFields();
     }
@@ -136,6 +141,11 @@ public class AddExtraction extends JDialog {
         }
         String typeArgs[] = {arg};
         Extraction newExtraction = new Extraction(txtName.getText(), cboType.getSelectedItem().toString(), typeArgs);
+        if(isEdit){
+            if(!(oldExtractionName.equals(txtName.getText()))){
+                ExtractManager.removeExtraction(oldExtractionName);
+            }
+        }
         ExtractManager.put(newExtraction);
         dispose();
     }

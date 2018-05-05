@@ -29,8 +29,9 @@ public class ReplaceManager {
         BurpExtender.println(rep.getId());
         repModelMap.put(rep.getId(), rep);
     }
-
-
+    public static void removeReplace(String id) {
+        ReplaceManager.repModelMap.remove(id);
+    }
     public static void removeReplace(int i) {
         if (i >= 0) {
             ArrayList<Replace> tempReplace = ReplaceManager.getReplacementList();

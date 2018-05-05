@@ -34,6 +34,10 @@ public class Replace extends ExtractReplace {
         burpAction = new BurpAction(this);
     }
 
+    public void setReplaceMethod(String[] typeArgs){
+        this.setExtractReplaceMethod(this, this.getType(), typeArgs);
+    }
+
     public Replace(String name, String type, String[] typeArgs, List<Extraction> extList) {
         this(name, TransformTypes.valueOf(type), typeArgs, extList);
 

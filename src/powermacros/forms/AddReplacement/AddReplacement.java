@@ -33,8 +33,12 @@ public class AddReplacement extends JDialog {
     private LinkedExtractsTableModel extractionModel;
     private Replace replaceToEdit;
 
+    private boolean isEdit = false;
+    private String oldReplaceId = null;
     public AddReplacement(Replace replaceToEdit) {
         this();
+        isEdit = true;
+        oldReplaceId = replaceToEdit.getId();
         this.replaceToEdit = replaceToEdit;
         this.extractionModel = new LinkedExtractsTableModel(replaceToEdit);
         this.extractTable.setModel(this.extractionModel);
@@ -195,12 +199,21 @@ public class AddReplacement extends JDialog {
             arg = txtPath.getText();
         }
 
+        if(isEdit){
+            if(!(oldReplaceId.equals(txtName.getText()))){
+                ReplaceManager.removeReplace(oldReplaceId);
+            }
+        }
+
         String typeArgs = arg;
         BurpExtender.println("here");
         replaceToEdit.setId(txtName.getText());
         BurpExtender.println("here2");
         replaceToEdit.setTypeString(selectedTransform);
         BurpExtender.println("here3");
+        replaceToEdit.getExtractReplaceMethod();
+        replaceToEdit.setReplaceMethod(new String[]{typeArgs});
+        BurpExtender.println("here3.5");
         replaceToEdit.getExtractReplaceMethod().setExtractionArgument(typeArgs);
         BurpExtender.println("here4");
         ReplaceManager.putReplace(replaceToEdit);

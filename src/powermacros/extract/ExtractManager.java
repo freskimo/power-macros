@@ -31,7 +31,13 @@ public class ExtractManager {
         }
         return null;
     }
-
+    public static void removeExtraction(String id) {
+        //Remove any linked extractions for the selected removal
+        for (Replace r : ReplaceManager.getReplacementList()) {
+            r.linkedExtracts.remove(id);
+        }
+        ExtractManager.getExtModelMap().remove(id);
+    }
     public static void removeExtraction(int i) {
         if (i == -1) {
             return;
@@ -44,7 +50,6 @@ public class ExtractManager {
         for (Replace r : ReplaceManager.getReplacementList()) {
             r.linkedExtracts.remove(removeExtractId);
         }
-
 
         ExtractManager.getExtModelMap().remove(removeExtractId);
     }

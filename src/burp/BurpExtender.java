@@ -20,7 +20,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuFactory, ITab  {
@@ -50,8 +49,9 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
     private JTable extractTable;
     public static MainExtractTableModel mainExtractTableModel;
 
+
     public JTable replaceTable;
-    public static MainReplaceTableModel replaceTableModel;
+    public static MainReplaceTableModel mainReplaceTableModel;
 
     private JButton addExtractionButton;
     private JButton removeReplacementButton;
@@ -73,7 +73,6 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
                 public void actionPerformed(ActionEvent e){
                     onAddExtraction();
                 }
-
             });
             addReplacementButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -82,32 +81,22 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
             });
             INSTANCE = this;
             mainExtractTableModel = new MainExtractTableModel();
-            replaceTableModel = new MainReplaceTableModel();
+            mainReplaceTableModel = new MainReplaceTableModel();
 
             extractTable.setModel(mainExtractTableModel);
-            replaceTable.setModel(replaceTableModel);
+            replaceTable.setModel(mainReplaceTableModel);
             tabbedPane1.remove(tabSettingsConfig);
         }
         editReplacementButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Replace replaceEdit = ReplaceManager.getReplace(replaceTable.getSelectedRow());
-                AddReplacement addExtractForm = new AddReplacement(replaceEdit);
-                addExtractForm.setTitle("Edit replacement...");
-                addExtractForm.setSize(new Dimension (400, 454));
-                addExtractForm.setResizable(false);
-                addExtractForm.setVisible(true);
+                onEditReplacement();
             }
         });
         editExtractionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Extraction extractEdit = ExtractManager.getExtraction(extractTable.getSelectedRow());
-                AddExtraction addExtractForm = new AddExtraction(extractEdit);
-                addExtractForm.setTitle("Edit extraction...");
-                addExtractForm.setSize(new Dimension (400, 210));
-                addExtractForm.setResizable(false);
-                addExtractForm.setVisible(true);
+                onEditExtraction();
             }
         });
         removeExtractionButton.addActionListener(new ActionListener() {
@@ -135,7 +124,29 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
             }
         });
     }
+    private void onEditExtraction(){
+        Extraction extractEdit = ExtractManager.getExtraction(extractTable.getSelectedRow());
+        AddExtraction addExtractForm = new AddExtraction(extractEdit);
+        addExtractForm.setTitle("Edit extraction...");
+        addExtractForm.setSize(new Dimension (400, 210));
+        addExtractForm.setResizable(false);
+        addExtractForm.setVisible(true);
 
+        BurpExtender.mainExtractTableModel = new MainExtractTableModel();
+        this.extractTable.setModel(mainExtractTableModel);
+    }
+    private void onEditReplacement(){
+        Replace replaceEdit = ReplaceManager.getReplace(replaceTable.getSelectedRow());
+        AddReplacement addExtractForm = new AddReplacement(replaceEdit);
+        addExtractForm.setTitle("Edit replacement...");
+        addExtractForm.setSize(new Dimension (400, 454));
+        addExtractForm.setResizable(false);
+        addExtractForm.setVisible(true);
+
+
+        BurpExtender.mainReplaceTableModel = new MainReplaceTableModel();
+        this.replaceTable.setModel(mainReplaceTableModel);
+    }
     private void onSaveSettings(){
         BufferedWriter writer = null;
         Gson gson = new Gson();
@@ -178,8 +189,8 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
         this.extractTable.setModel(mainExtractTableModel);
     }
     private void updateReplaceTable(){
-        BurpExtender.replaceTableModel = new MainReplaceTableModel();
-        this.replaceTable.setModel(replaceTableModel);
+        BurpExtender.mainReplaceTableModel = new MainReplaceTableModel();
+        this.replaceTable.setModel(mainReplaceTableModel);
     }
     public static void println(String msg){
         BurpExtender.getInstance().stdout.println(msg);
@@ -198,6 +209,9 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
         addReplacementForm.setSize(new Dimension (400, 454));
         addReplacementForm.setResizable(false);
         addReplacementForm.setVisible(true);
+
+        BurpExtender.mainReplaceTableModel = new MainReplaceTableModel();
+        this.replaceTable.setModel(mainReplaceTableModel);
     }
     private void onAddExtraction(){
             AddExtraction addExtractForm = new AddExtraction();

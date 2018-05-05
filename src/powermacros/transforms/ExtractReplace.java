@@ -1,5 +1,6 @@
 package powermacros.transforms;
 
+import burp.BurpExtender;
 import powermacros.extract.Extraction;
 import powermacros.replace.Replace;
 
@@ -33,7 +34,14 @@ public class ExtractReplace {
         }
     }
 
-    public ExtractReplaceMethod getExtractReplaceMethod(){return extractReplaceMethod;}
+    public ExtractReplaceMethod getExtractReplaceMethod(){
+        // TODO
+        //todo
+        if (extractReplaceMethod == null){
+            BurpExtender.println("test");
+        }
+        return extractReplaceMethod;
+    }
 
     public TransformTypes getType(){
         return this.type;
