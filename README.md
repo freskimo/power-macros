@@ -17,8 +17,8 @@ With the use of JavaScript files, fine-tuned manipulation of automated requests 
 - Modifying existing headers
   
 ## Advantages over BurpSuite's built-in macros
-- Able to perform string modification in automated request arbitrary strings in the request. 
-- ability to add new header into the request
+- Ability to perform header/body string modification of automated requests
+- Ability to add new headers into the requests.
 
 ## How to
 ### Installation of PowerMacros
