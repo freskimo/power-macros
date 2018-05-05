@@ -2,16 +2,19 @@
 PowerMacros is plug-in for BurpSuite proxy. It provides extended functionality of BurpSuite's built-in macros feature. This extension allows you to pipe automated requests (when certain conditions are met) to JavaScript files for pre-processing before being sent outbound. With JavaScript files you load, you can manipulate Burp Suite's automated requests on the fly. PowerMacros integrates powerfully with Burp Suite's features, in particular its target scoping functionality. 
 
 ## Practical Uses
-Incorporating JavaScript files allow for fine-tuning of automated requests. There are many ways this tool can be used. Here are just a few examples of PowerMacros capabilities:
-- CSRF token replacement
-- Session token replacement.
+With the use of JavaScript files, fine-tuned manipulation of automated requests can be achieved. This means that there are many ways this tool can be used. Here are just a few examples of PowerMacros capabilities:
+
+- Dynamic generation of injection (e.g. SQL) strings
+- Dynamic generation and replacement of CSRF tokens
 - Tailoring an XSS string to individual automated requests.
 
+
+
 ## Features
+- Modification of automated outbound request
+- Extracting data from an arbitrary response
 - Adding new headers
 - Modifying existing headers
-- Extracting data from an arbitrary response
-- Modification of automated outbound request
   
 ## Advantages over BurpSuite's built-in macros
 - Able to perform string modification in automated request arbitrary strings in the request. 
