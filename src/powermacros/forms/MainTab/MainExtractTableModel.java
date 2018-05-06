@@ -34,7 +34,6 @@ public class MainExtractTableModel extends AbstractTableModel {
     @Override
     public Object getValueAt(int row, int col) {
         String ret;
-//        BurpExtender.println("here");
         switch (col) {
             case 0:
                 ret = ExtractManager.getExtraction(row).getId();
@@ -103,23 +102,4 @@ public class MainExtractTableModel extends AbstractTableModel {
         }
         return row;
     }
-
-
-//    public String replaceExtractions(String request, IExtensionHelpers helpers) {
-//        for (Extraction extraction: this.extractions) {
-////            BurpExtender.getInstance().stdout.println("\nExtraction type: " + extraction.getTypeString());
-//
-////            if (extraction.getTypeString().equals(TransformTypes.REGEX.text())) {
-////                BurpExtender.getInstance().stdout.println("Extraction string: " + extraction.getReplacedExtraction(request));
-////                BurpExtender.getInstance().stdout.println("Replacement string: " + this.linkedReplacement.getExtractReplaceMethod().getReplacedExtraction(request));
-////                BurpExtender.getInstance().stdout.println("-------------------------------\n");
-//                request = request.replace(extraction.getExtractionString(request),
-//                        this.linkedReplacement.getExtractReplaceMethod().getReplacedExtraction(request));
-//
-////            }
-//        }
-//
-//        return request;
-//    }
-
 }

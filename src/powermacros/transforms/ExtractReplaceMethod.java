@@ -26,7 +26,6 @@ public abstract class ExtractReplaceMethod {
          return this.typeArgs;
     }
     public void setExtractionArgument(String typeArgs){
-        BurpExtender.println("here 3.1: " + typeArgs);
         this.typeArgs = typeArgs;
 
     }

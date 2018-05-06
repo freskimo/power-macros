@@ -35,10 +35,7 @@ public class ExtractReplace {
     }
 
     public ExtractReplaceMethod getExtractReplaceMethod(){
-        // TODO
-        //todo
         if (extractReplaceMethod == null){
-            BurpExtender.println("test");
         }
         return extractReplaceMethod;
     }

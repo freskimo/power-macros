@@ -23,8 +23,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuFactory, ITab  {
-    //TODO: Feature idea: Cascading extraction replacements like CSS (sequential replacements in order). Ability to set order
-    //TODO: Feature idea: Ability to add post-processing python/ruby/JS script. After replacements are done, the request is passed to the script for final processing
     public static BurpExtender getInstance() {
         return INSTANCE;
     }
@@ -261,8 +259,7 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
         callbacks.addSuiteTab(this);
 
         stdout.println("[*] " + EXTENSION_NAME + " " + VERSION);
-        stdout.println("Starting debug utilities");
-        debugUtilities = new DebugUtilities(this);
+//        debugUtilities = new DebugUtilities(this);
     }
 
     @Override

@@ -32,27 +32,20 @@ public class ExtractReplaceScript extends ExtractReplaceMethod {
     public String getReplacedExtraction(String requestResponse) {
         ScriptEngineManager factory = new ScriptEngineManager();
         // escape all the single quotes or do other required modifications to the body
-        BurpExtender.println(this.scriptLanguage);
         ScriptEngine engine = factory.getEngineByName(this.scriptLanguage);
-//        ScriptContext context = new SimpleScriptContext();
 
-        BurpExtender.println("Set the script language successfully");
         // set the RequestBody for the javascript functionality
-//        engine.put("requestBody",requestResponse);
+        engine.put("requestBody",requestResponse);
         // execute the js
 
-        BurpExtender.println("Attempting replace");
-        try { //TODO
-            BurpExtender.println("Attempting read: " + this.typeArgs);
+        try {
             engine.eval(new java.io.FileReader(this.typeArgs)); //, context);
         } catch (Exception e) {
-            BurpExtender.println("getReplacedExtraction SCRIPT FAILURE: " + e.getMessage());
+            BurpExtender.println("Script read error.");
         }
-        BurpExtender.println("Finish replace");
 
         // read the result variable from the js
         Object res = engine.get("result");
-        BurpExtender.println("The replacement: " + res.toString());
         // and return it
         return res.toString();
     }
@@ -65,7 +58,7 @@ public class ExtractReplaceScript extends ExtractReplaceMethod {
         URL url = BurpExtender.getInstance().helpers.analyzeRequest(currentRequest).getUrl();
 
         // if the target host is the right one and the url is not e.g login
-        if (BurpExtender.HOST_FROM.equalsIgnoreCase(httpService.getHost()) && !url.getPath().equalsIgnoreCase("/login")) { //TODO: remove login?
+        if (BurpExtender.HOST_FROM.equalsIgnoreCase(httpService.getHost())) {
             // get the request info
             IRequestInfo rqInfo = BurpExtender.getInstance().helpers.analyzeRequest(currentRequest);
             // retrieve all headers
@@ -90,8 +83,6 @@ public class ExtractReplaceScript extends ExtractReplaceMethod {
             // create the new http message with the modified header
             byte[] message = BurpExtender.getInstance().helpers.buildHttpMessage(headers, messageBody.getBytes());
             // print out the debug message if applicable (will be shown in the ui of Burp)
-            BurpExtender.getInstance().stdout.println(BurpExtender.getInstance().helpers.bytesToString(message));
-            BurpExtender.getInstance().stdout.println("---------------");
             // replace the current request and forward it
             currentRequest.setRequest(message);
         }

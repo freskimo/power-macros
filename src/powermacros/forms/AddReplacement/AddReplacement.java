@@ -206,18 +206,12 @@ public class AddReplacement extends JDialog {
         }
 
         String typeArgs = arg;
-        BurpExtender.println("here");
         replaceToEdit.setId(txtName.getText());
-        BurpExtender.println("here2");
         replaceToEdit.setTypeString(selectedTransform);
-        BurpExtender.println("here3");
         replaceToEdit.getExtractReplaceMethod();
         replaceToEdit.setReplaceMethod(new String[]{typeArgs});
-        BurpExtender.println("here3.5");
         replaceToEdit.getExtractReplaceMethod().setExtractionArgument(typeArgs);
-        BurpExtender.println("here4");
         ReplaceManager.putReplace(replaceToEdit);
-        BurpExtender.println("here5");
         dispose();
     }
 

@@ -26,7 +26,6 @@ public class ReplaceManager {
     }
 
     public static void putReplace(Replace rep) {
-        BurpExtender.println(rep.getId());
         repModelMap.put(rep.getId(), rep);
     }
     public static void removeReplace(String id) {
